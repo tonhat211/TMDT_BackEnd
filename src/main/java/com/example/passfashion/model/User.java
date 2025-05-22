@@ -16,6 +16,10 @@ public class User {
     @Column(name="name", nullable = false)
     private String name;
 
+    @ManyToOne
+    @JoinColumn(name = "image_id")
+    private Image image;
+
     @Column(name="email", nullable = false)
     private String email;
 
@@ -28,18 +32,63 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses=new ArrayList<>();
 
-    @Column(name="saled_order_qty", nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int saledOrderQty;
+    @Column(name="sold_order_qty", nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int soldOrderQty;
+
+    @Column(name="rating", nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int rating;
+
+    @Column(name="total_review", nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int totalReview;
 
     @Column(name="is_deleted", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int isDeleted;
 
-    public int getSaledOrderQty() {
-        return saledOrderQty;
+    @Transient
+    private String imageUrl;
+
+
+    public User() {
     }
 
-    public void setSaledOrderQty(int saledOrderQty) {
-        this.saledOrderQty = saledOrderQty;
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public int getSoldOrderQty() {
+        return soldOrderQty;
+    }
+
+    public void setSoldOrderQty(int soldOrderQty) {
+        this.soldOrderQty = soldOrderQty;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public int getTotalReview() {
+        return totalReview;
+    }
+
+    public void setTotalReview(int totalReview) {
+        this.totalReview = totalReview;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 
     public long getId() {

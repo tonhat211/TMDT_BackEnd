@@ -1,7 +1,11 @@
 package com.example.passfashion.controller;
 
 import com.example.passfashion.dto.BasicProductResponse;
+import com.example.passfashion.dto.ProductDetailResponse;
+import com.example.passfashion.model.Comment;
+import com.example.passfashion.model.Image;
 import com.example.passfashion.model.Product;
+import com.example.passfashion.model.User;
 import com.example.passfashion.repository.ProductRepository;
 import com.example.passfashion.service.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/products")
@@ -43,13 +49,17 @@ public class ProductController {
         return ResponseEntity.ok(result);
     }
 
-//    @PostMapping("/detail/{id}")
-//    public ResponseEntity<Product> findById(
-//            @PathVariable long id) {
-//        System.out.println("/product/detail/"+id);
-//        Product product = productRepository.findById(id).orElse(null);
-//        return ResponseEntity.ok(product);
-//    }
+    @PostMapping("/detail/{id}")
+    public ResponseEntity<ProductDetailResponse> findById(
+            @PathVariable long id) {
+        System.out.println("/product/detail/"+id);
+        Product product = productRepository.findById(id).orElse(null);
+        User owner = product.getUser();
+        List<Image> images = product.getImages();
+        List<Comment> comments = product.getComments();
+        ProductDetailResponse result = new ProductDetailResponse(product,images,owner,comments);
+        return ResponseEntity.ok(result);
+    }
 
 
 }
