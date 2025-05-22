@@ -27,12 +27,11 @@ public class Product {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "image_id")
-    private Image thumbnail;
+    @Column(name = "qty", columnDefinition = "INT DEFAULT 1")
+    private int qty;
 
-    @Column(name = "description")
-    private String description = null;
+    @Column(name = "description", columnDefinition = "JSON")
+    private String description;
 
     @ManyToMany
     @JoinTable(
@@ -53,6 +52,16 @@ public class Product {
 
     @Column(name = "created_at", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP", nullable = false, updatable = false, insertable = false)
     private LocalDateTime createdAt;
+
+    public Product() {
+    }
+
+    public Product(long id, String name, double price, List<Image> images) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.images = images;
+    }
 
     public User getUser() {
         return user;
@@ -108,14 +117,6 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
-    }
-
-    public Image getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(Image thumbnail) {
-        this.thumbnail = thumbnail;
     }
 
     public List<Image> getImages() {

@@ -1,6 +1,9 @@
 package com.example.passfashion.dto;
 
+import com.example.passfashion.model.Image;
 import com.example.passfashion.service.Constant;
+
+import java.util.List;
 
 public class BasicProductResponse {
     private long id;
@@ -9,11 +12,13 @@ public class BasicProductResponse {
     private String thumbnail;
     private boolean isSold;
 
-    public BasicProductResponse(long id, String name, double price, String thumbnail, int isSold) {
+    public BasicProductResponse(long id, String name, double price, List<Image> images, int isSold) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.thumbnail = Constant.PRODUCT_IMG_DIR+"/" +thumbnail;
+        if (images != null && !images.isEmpty()) {
+            this.thumbnail = Constant.PRODUCT_IMG_DIR+"/"+images.get(0).getUrl();
+        }
         if(isSold==1) this.isSold = true; else this.isSold = false;
     }
 

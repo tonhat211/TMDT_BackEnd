@@ -1,6 +1,7 @@
 package com.example.passfashion.controller;
 
 import com.example.passfashion.dto.BasicProductResponse;
+import com.example.passfashion.model.Product;
 import com.example.passfashion.repository.ProductRepository;
 import com.example.passfashion.service.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,26 @@ public class ProductController {
         System.out.println("/product/"+categoryCode+"\tpage: " + page);
         Sort sort = Sort.by(Sort.Direction.fromString(direction), sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<BasicProductResponse> result = productRepository.findByCategory(categoryCode, pageable);
+        Page<Product> productPage = productRepository.findByCategory(categoryCode, pageable);
+        Page<BasicProductResponse> result = productPage.map(product ->
+                new BasicProductResponse(
+                        product.getId(),
+                        product.getName(),
+                        product.getPrice(),
+                        product.getImages(),
+                        product.getIsSold()
+                )
+        );
         return ResponseEntity.ok(result);
     }
+
+//    @PostMapping("/detail/{id}")
+//    public ResponseEntity<Product> findById(
+//            @PathVariable long id) {
+//        System.out.println("/product/detail/"+id);
+//        Product product = productRepository.findById(id).orElse(null);
+//        return ResponseEntity.ok(product);
+//    }
 
 
 }
