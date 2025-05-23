@@ -1,9 +1,6 @@
 package com.example.passfashion.dto;
 
-import com.example.passfashion.model.Comment;
-import com.example.passfashion.model.Image;
-import com.example.passfashion.model.Product;
-import com.example.passfashion.model.User;
+import com.example.passfashion.model.*;
 import com.example.passfashion.service.Constant;
 
 import java.util.ArrayList;
@@ -11,19 +8,22 @@ import java.util.List;
 
 public class ProductDetailResponse {
     private Product product;
+    private Category category;
     private List<String> images = new ArrayList<String>();
     private boolean isSold;
     private User owner;
-    private List<Comment> comments;
-    public ProductDetailResponse(Product product, List<Image> images, User user, List<Comment> comments) {
+    private List<CommentResponse> comments;
+    public ProductDetailResponse(Product product, Category category, List<Image> images, User user, List<CommentResponse> comments) {
         this.product = new Product();
         this.product.setId(product.getId());
         this.product.setName(product.getName());
         this.product.setDescription(product.getDescription());
         this.product.setPrice(product.getPrice());
+        this.product.setQty(product.getQty());
+        this.category = (category);
         if (images != null && !images.isEmpty()) {
             for (Image image : images) {
-                this.images.add(image.getUrl());
+                this.images.add(Constant.PRODUCT_IMG_DIR +"/"+ image.getUrl().trim());
             }
         }
         if(product.getIsSold()==1) this.isSold = true; else this.isSold = false;
@@ -34,9 +34,17 @@ public class ProductDetailResponse {
         owner.setRating(user.getRating());
         owner.setTotalReview(user.getTotalReview());
         if(user.getImage()!=null)
-            owner.setImageUrl(Constant.AVATAR_IMG_DIR+"/"+ user.getImage().getUrl());
+            owner.setAvatar(Constant.AVATAR_IMG_DIR+"/"+ user.getImage().getUrl());
 //
         this.comments = comments;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Product getProduct() {
@@ -71,11 +79,11 @@ public class ProductDetailResponse {
         this.owner = owner;
     }
 
-    public List<Comment> getComments() {
+    public List<CommentResponse> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(List<CommentResponse> comments) {
         this.comments = comments;
     }
 }

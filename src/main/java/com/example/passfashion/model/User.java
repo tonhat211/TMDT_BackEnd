@@ -45,18 +45,18 @@ public class User {
     private int isDeleted;
 
     @Transient
-    private String imageUrl;
+    private String avatar;
 
 
     public User() {
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public int getSoldOrderQty() {
