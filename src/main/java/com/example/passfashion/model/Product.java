@@ -1,6 +1,5 @@
 package com.example.passfashion.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -18,7 +17,7 @@ public class Product {
     private String name;
 
     @Column(name = "price", nullable = false, columnDefinition = "DOUBLE DEFAULT 0")
-    private double price;  //  viet ham tu dong cap nhat khi detail cap nhat
+    private double price;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

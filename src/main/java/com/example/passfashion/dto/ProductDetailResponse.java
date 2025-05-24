@@ -6,6 +6,7 @@ import com.example.passfashion.service.Constant;
 import java.util.ArrayList;
 import java.util.List;
 
+// dung trong productDetail: hien thi chi tiet san pham
 public class ProductDetailResponse {
     private Product product;
     private Category category;

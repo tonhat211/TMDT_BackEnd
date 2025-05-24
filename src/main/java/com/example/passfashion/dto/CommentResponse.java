@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+//dung trong productDetail, hien thi comment
 public class CommentResponse {
     private long id;
     private long productId;

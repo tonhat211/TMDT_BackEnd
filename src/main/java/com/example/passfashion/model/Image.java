@@ -12,9 +12,6 @@ public class Image {
     @Column(name="url", nullable = false)
     private String url;
 
-    @Column(name="alt", nullable = false)
-    private String alt;
-
     public long getId() {
         return id;
     }
@@ -29,14 +26,6 @@ public class Image {
 
     public void setTitle(String title) {
         this.url = title;
-    }
-
-    public String getAlt() {
-        return alt;
-    }
-
-    public void setAlt(String alt) {
-        this.alt = alt;
     }
 
     public String getUrl() {
