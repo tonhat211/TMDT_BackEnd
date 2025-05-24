@@ -18,8 +18,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     WHERE p.isDeleted = 0 
     AND p.isSold = 0
     AND p.category.link = :categoryLink
-""")
-Page<Product> findByCategory(@Param("categoryLink") String categoryLink, Pageable pageable);
+    """)
+    Page<Product> findByCategory(@Param("categoryLink") String categoryLink, Pageable pageable);
 
 
     Optional<Product> findById(Long id);

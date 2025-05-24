@@ -35,8 +35,8 @@ public class User {
     @Column(name="sold_order_qty", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int soldOrderQty;
 
-    @Column(name="rating", nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int rating;
+    @Column(name="rating", nullable = false, columnDefinition = "DOUBLE DEFAULT 0")
+    private double rating;
 
     @Column(name="total_review", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int totalReview;
@@ -67,11 +67,11 @@ public class User {
         this.soldOrderQty = soldOrderQty;
     }
 
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 
