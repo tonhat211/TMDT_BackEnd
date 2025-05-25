@@ -5,6 +5,7 @@ import com.example.passfashion.service.Constant;
 
 import java.util.List;
 
+// dung trong product,... hien thi productItem
 public class BasicProductResponse {
     private long id;
     private String name;
