@@ -16,13 +16,11 @@ public class User {
     @Column(name="name", nullable = false)
     private String name;
 
-<<<<<<< Updated upstream
-=======
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id", referencedColumnName = "id")
     private Image image;
 
->>>>>>> Stashed changes
+
     @Column(name="email", nullable = false)
     private String email;
 
@@ -38,20 +36,65 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses=new ArrayList<>();
 
-    @Column(name="saled_order_qty", nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int saledOrderQty;
+    @Column(name="sold_order_qty", nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int soldOrderQty;
+
+    @Column(name="rating", nullable = false, columnDefinition = "DOUBLE DEFAULT 0")
+    private double rating;
+
+    @Column(name="total_review", nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int totalReview;
 
     @Column(name="is_deleted", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int isDeleted;
 
-    public int getSaledOrderQty() {
-        return saledOrderQty;
+    @Transient
+    private String avatar;
+
+
+    public User() {
     }
 
-<<<<<<< Updated upstream
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public int getSoldOrderQty() {
+        return soldOrderQty;
+    }
+
+    public void setSoldOrderQty(int soldOrderQty) {
+        this.soldOrderQty = soldOrderQty;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public int getTotalReview() {
+        return totalReview;
+    }
+
+    public void setTotalReview(int totalReview) {
+        this.totalReview = totalReview;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+
     public void setSaledOrderQty(int saledOrderQty) {
         this.saledOrderQty = saledOrderQty;
-=======
+
     public String getPhone() {
         return phone;
     }
@@ -98,8 +141,8 @@ public class User {
 
     public void setImage(Image image) {
         this.image = image;
->>>>>>> Stashed changes
-    }
+
+
 
     public long getId() {
         return id;

@@ -28,15 +28,30 @@ public class Comment {
     @JoinColumn(name = "parent_id")
     private Comment parentComment;
 
-    @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
-    private List<Comment> replies = new ArrayList<>();
+    @Column(name="level", nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int level;
 
     @Column(name = "created_at", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
-
-    @Column(name="is_deleted", nullable = false)
+    @Column(name="is_deleted", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int isDeleted;
+
+    public int getLevel() {
+        return level;
+    }
+
+    public Comment getParentComment() {
+        return parentComment;
+    }
+
+    public void setParentComment(Comment parentComment) {
+        this.parentComment = parentComment;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
 
     public long getId() {
         return id;
@@ -68,22 +83,6 @@ public class Comment {
 
     public void setProduct(Product product) {
         this.product = product;
-    }
-
-    public Comment getParentComment() {
-        return parentComment;
-    }
-
-    public void setParentComment(Comment parentComment) {
-        this.parentComment = parentComment;
-    }
-
-    public List<Comment> getReplies() {
-        return replies;
-    }
-
-    public void setReplies(List<Comment> replies) {
-        this.replies = replies;
     }
 
     public LocalDateTime getCreatedAt() {
