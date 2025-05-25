@@ -16,6 +16,13 @@ public class User {
     @Column(name="name", nullable = false)
     private String name;
 
+<<<<<<< Updated upstream
+=======
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "image_id", referencedColumnName = "id")
+    private Image image;
+
+>>>>>>> Stashed changes
     @Column(name="email", nullable = false)
     private String email;
 
@@ -24,6 +31,9 @@ public class User {
 
     @Column(name="birthday", nullable = true)
     private LocalDate birthday;
+
+    @Column(name="phone", nullable = true)
+    private String phone;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses=new ArrayList<>();
@@ -38,8 +48,57 @@ public class User {
         return saledOrderQty;
     }
 
+<<<<<<< Updated upstream
     public void setSaledOrderQty(int saledOrderQty) {
         this.saledOrderQty = saledOrderQty;
+=======
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public int getSoldOrderQty() {
+        return soldOrderQty;
+    }
+
+    public void setSoldOrderQty(int soldOrderQty) {
+        this.soldOrderQty = soldOrderQty;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public int getTotalReview() {
+        return totalReview;
+    }
+
+    public void setTotalReview(int totalReview) {
+        this.totalReview = totalReview;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+>>>>>>> Stashed changes
     }
 
     public long getId() {
