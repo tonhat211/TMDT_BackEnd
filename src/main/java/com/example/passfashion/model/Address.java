@@ -23,6 +23,9 @@ public class Address {
     @Column(name = "detail", nullable = false)
     private String detail;
 
+    @Column(name = "district", nullable = false)
+    private String district;
+
     @Column(name = "isDefault", nullable = false)
     private int isDefault;
 
@@ -32,6 +35,15 @@ public class Address {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
     public long getId() {
         return id;
     }
