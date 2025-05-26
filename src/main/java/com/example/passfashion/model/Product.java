@@ -1,10 +1,21 @@
 package com.example.passfashion.model;
 
-import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "products")
@@ -17,7 +28,7 @@ public class Product {
     private String name;
 
     @Column(name = "price", nullable = false, columnDefinition = "DOUBLE DEFAULT 0")
-    private double price;
+    private double price; // viet ham tu dong cap nhat khi detail cap nhat
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -30,19 +41,17 @@ public class Product {
     @Column(name = "qty", columnDefinition = "INT DEFAULT 1")
     private int qty;
 
-    @Column(name = "description", columnDefinition = "JSON")
-    private String description;
+    @Column(name = "description")
+    private String description = null;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<WishList> wishlist;
 
     @ManyToMany
-    @JoinTable(
-            name = "image_products",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "image_id")
-    )
-    private List<Image> images=new ArrayList<>();
+    @JoinTable(name = "image_products", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "image_id"))
+    private List<Image> images = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments=new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 
     @Column(name = "is_sold", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int isSold;
