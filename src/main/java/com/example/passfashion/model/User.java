@@ -1,10 +1,19 @@
 package com.example.passfashion.model;
 
-import jakarta.persistence.*;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
@@ -13,25 +22,28 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name="name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name="email", nullable = false)
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name="pwd", nullable = false)
+    @Column(name = "pwd", nullable = false)
     private String pwd;
 
-    @Column(name="birthday", nullable = true)
+    @Column(name = "birthday", nullable = true)
     private LocalDate birthday;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Address> addresses=new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<WishList> wishlist;
 
-    @Column(name="saled_order_qty", nullable = false, columnDefinition = "INT DEFAULT 0")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Address> addresses = new ArrayList<>();
+
+    @Column(name = "saled_order_qty", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int saledOrderQty;
 
-    @Column(name="is_deleted", nullable = false, columnDefinition = "INT DEFAULT 0")
+    @Column(name = "is_deleted", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int isDeleted;
 
     public int getSaledOrderQty() {
