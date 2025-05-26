@@ -29,6 +29,7 @@ public class SecurityConfig {
                                                                 "/js/**")
                                                 .permitAll()
 
+
                                                 .anyRequest().authenticated())
                                 .csrf(csrf -> csrf.disable()); // disable CSRF
 

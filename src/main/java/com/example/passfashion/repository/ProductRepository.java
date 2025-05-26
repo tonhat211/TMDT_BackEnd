@@ -9,31 +9,20 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-
-   @Query("""
-    SELECT new com.example.passfashion.dto.BasicProductResponse(
-        p.id, p.name,p.price, p.thumbnail.url,p.isSold)
-    FROM Product p
-    WHERE p.isDeleted = 0 
-    AND p.id = 0
-    AND p.category.link = :categoryLink
-    """)
-   Page<BasicProductResponse> findByCategory(@Param("categoryLink") String categoryLink, Pageable pageable);
-
     @Query("""
-    SELECT new com.example.passfashion.dto.BasicProductResponse(
-        p.id, p.name,p.price, p.thumbnail.url,p.isSold)
-    FROM Product p
+    SELECT p FROM Product p
     WHERE p.isDeleted = 0 
     AND p.isSold = 0
-    ORDER BY p.createdAt DESC
+    AND p.category.link = :categoryLink
     """)
-    Page<BasicProductResponse> findSome(Pageable pageable);
+    Page<Product> findByCategory(@Param("categoryLink") String categoryLink, Pageable pageable);
 
 
-
+    Optional<Product> findById(Long id);
 
 }
 
