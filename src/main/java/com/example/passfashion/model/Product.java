@@ -1,5 +1,6 @@
 package com.example.passfashion.model;
 
+import com.example.passfashion.utils.VietnameseUtils;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -53,7 +54,30 @@ public class Product {
     @Column(name = "created_at", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP", nullable = false, updatable = false, insertable = false)
     private LocalDateTime createdAt;
 
+
+    @Column(name = "unsigned_name", nullable = true)
+    private String unsignedName;
+
+    @PrePersist
+    @PreUpdate
+    public void prepare() {
+        this.unsignedName = VietnameseUtils.removeVietnameseDiacritics(this.name).toLowerCase();
+    }
+
+
+    public String getUnsignedName() {
+        return unsignedName;
+    }
+
+    public void setUnsignedName(String unsignedName) {
+        this.unsignedName = unsignedName;
+    }
+
     public Product() {
+    }
+
+    public Product(long id) {
+        this.id = id;
     }
 
     public Product(long id, String name, double price, List<Image> images) {

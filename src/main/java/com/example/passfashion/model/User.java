@@ -51,6 +51,10 @@ public class User {
     public User() {
     }
 
+    public User(long id) {
+        this.id = id;
+    }
+
     public String getAvatar() {
         return avatar;
     }
