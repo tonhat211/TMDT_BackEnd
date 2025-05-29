@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.example.passfashion.dto.Request.LoginRequest;
 import com.example.passfashion.dto.Request.RegisterRequest;
 import com.example.passfashion.dto.Response.UserResponse;
-import com.example.passfashion.mapper.IUserMapper;
 import com.example.passfashion.model.User;
 import com.example.passfashion.repository.UserRepository;
 
