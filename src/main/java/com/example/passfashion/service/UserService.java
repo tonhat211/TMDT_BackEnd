@@ -15,18 +15,15 @@ import com.example.passfashion.repository.UserRepository;
 
 @Service
 public class UserService {
-    @Autowired
+   @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private IUserMapper userMapper;
 
     public UserResponse login(@RequestBody LoginRequest request) {
         Optional<User> user = userRepository.findByEmailAndPwd(request.getEmail(), request.getPwd());
         if (user.isEmpty()) {
             throw new RuntimeException("Email hoặc mật khẩu không đúng");
         }
-        return userMapper.toUserResponse(user.get());
+        return convertToUserResponse(user.get());
     }
 
     public UserResponse register(@RequestBody RegisterRequest request) {
@@ -40,12 +37,23 @@ public class UserService {
         user.setPhone(request.getPhone());
 
         User saved = userRepository.save(user);
-        return userMapper.toUserResponse(saved);
+        return convertToUserResponse(saved);
     }
 
     public UserResponse getUserById(Long id) {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Không tìm thấy người dùng với id: " + id));
-        return userMapper.toUserResponse(user);
+        return convertToUserResponse(user);
+    }
+
+    // 👉 Đây là method chuyển đổi User → UserResponse, viết nội bộ trong service
+    private UserResponse convertToUserResponse(User user) {
+        UserResponse response = new UserResponse();
+        response.setName(user.getName());
+        response.setEmail(user.getEmail());
+        response.setBirthday(user.getBirthday());
+        response.setPhone(user.getPhone());
+        response.setImageUrl(user.getImage() != null ? user.getImage().getUrl() : null);
+        return response;
     }
 }
