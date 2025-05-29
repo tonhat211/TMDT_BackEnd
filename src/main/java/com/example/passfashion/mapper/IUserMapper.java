@@ -8,6 +8,7 @@ import com.example.passfashion.model.User;
 
 @Mapper(componentModel = "spring")
 public interface IUserMapper {
-    @Mapping(source = "image.url", target = "imageUrl")
-    UserResponse toUserResponse(User user);
+
+  @Mapping(target = "imageUrl", expression = "java(user.getImage() != null ? user.getImage().getUrl() : null)")
+  UserResponse toUserResponse(User user);
 }
