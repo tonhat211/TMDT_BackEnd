@@ -1,13 +1,12 @@
 package com.example.passfashion.dto.Response;
 
-import com.example.passfashion.model.Image;
-import lombok.*;
-
 import java.time.LocalDate;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Data
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserResponse {
@@ -16,5 +15,30 @@ public class UserResponse {
     private LocalDate birthday;
     private String phone;
     private String imageUrl;
+    // all setter
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getName() {
+        return name;
+    }
 
 }

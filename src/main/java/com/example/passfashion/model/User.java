@@ -3,6 +3,7 @@ package com.example.passfashion.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -16,19 +17,28 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = true)
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -44,19 +54,17 @@ public class User {
     @Column(name = "birthday", nullable = true)
     private LocalDate birthday;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<WishList> wishlist;
+    @Column(name = "phone", nullable = true)
+    private String phone;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses = new ArrayList<>();
 
-    @Column(name = "saled_order_qty", nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int saledOrderQty;
-    @Column(name = "phone", nullable = true)
-    private String phone;
+    @Column(name = "sold_order_qty", nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int soldOrderQty;
 
-    @Column(name = "rating", nullable = false, columnDefinition = "DOUBLE DEFAULT 0")
-    private double rating;
+    @Column(name = "rating", nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int rating;
 
     @Column(name = "total_review", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int totalReview;
@@ -66,5 +74,119 @@ public class User {
 
     @Transient
     private String avatar;
+
+    @PrePersist
+    public void prePersist() {
+        if (this.name == null || this.name.trim().isEmpty()) {
+            this.name = "user" + UUID.randomUUID().toString().substring(0, 8);
+        }
+    }
+
+    // get id
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    // get birthday
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
+    // ghet image
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
+    public int getSoldOrderQty() {
+        return soldOrderQty;
+    }
+
+    public void setSoldOrderQty(int soldOrderQty) {
+        this.soldOrderQty = soldOrderQty;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public int getTotalReview() {
+        return totalReview;
+    }
+
+    public void setTotalReview(int totalReview) {
+        this.totalReview = totalReview;
+    }
+
+    public int getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(int isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
 }
