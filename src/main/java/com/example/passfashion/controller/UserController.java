@@ -1,5 +1,18 @@
 package com.example.passfashion.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.passfashion.dto.Request.AddressUpdateRequest;
 import com.example.passfashion.dto.Request.LoginRequest;
 import com.example.passfashion.dto.Request.RegisterRequest;
@@ -11,13 +24,6 @@ import com.example.passfashion.model.User;
 import com.example.passfashion.repository.AddressRepository;
 import com.example.passfashion.repository.UserRepository;
 import com.example.passfashion.service.UserService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/users")

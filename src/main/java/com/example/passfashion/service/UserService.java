@@ -14,7 +14,7 @@ import com.example.passfashion.repository.UserRepository;
 
 @Service
 public class UserService {
-   @Autowired
+    @Autowired
     private UserRepository userRepository;
 
     public UserResponse login(@RequestBody LoginRequest request) {
