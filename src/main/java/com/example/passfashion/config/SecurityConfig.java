@@ -20,6 +20,7 @@ public class SecurityConfig {
                                                                         // khong can xac thuc,
                                                                         // dang nhap
                         .requestMatchers("/api/v1/products/**").permitAll()
+                        .requestMatchers("/api/v1/comments/**").permitAll()
                         .requestMatchers("/api/v1/categories/**").permitAll()
                         .requestMatchers("/api/v1/wishlists/**").permitAll() // ✅ Cho phép truy
                                                                              // cập Wishlist API

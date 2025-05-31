@@ -1,37 +1,18 @@
 package com.example.passfashion.model;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 @Entity
-@Data
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
@@ -81,14 +62,35 @@ public class User {
             this.name = "user" + UUID.randomUUID().toString().substring(0, 8);
         }
     }
+    public User(long id) {
+        this.id = id;
+    }
 
-    // get id
+    public User() {
+    }
+
     public long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 
     public String getEmail() {
@@ -107,23 +109,6 @@ public class User {
         this.pwd = pwd;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    // get birthday
     public LocalDate getBirthday() {
         return birthday;
     }
@@ -132,13 +117,12 @@ public class User {
         this.birthday = birthday;
     }
 
-    // ghet image
-    public Image getImage() {
-        return image;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public List<Address> getAddresses() {
@@ -188,5 +172,4 @@ public class User {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
-
 }

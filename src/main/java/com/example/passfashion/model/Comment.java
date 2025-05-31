@@ -37,6 +37,13 @@ public class Comment {
     @Column(name="is_deleted", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int isDeleted;
 
+    public Comment() {
+    }
+
+    public Comment(long id) {
+        this.id = id;
+    }
+
     public int getLevel() {
         return level;
     }
