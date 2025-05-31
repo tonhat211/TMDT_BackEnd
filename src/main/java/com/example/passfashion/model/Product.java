@@ -89,6 +89,10 @@ public class Product {
     public Product() {
     }
 
+    public Product(long id) {
+        this.id = id;
+    }
+
     public Product(long id, String name, double price, List<Image> images) {
         this.id = id;
         this.name = name;
