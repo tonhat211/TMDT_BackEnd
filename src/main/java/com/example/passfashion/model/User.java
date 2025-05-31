@@ -61,20 +61,14 @@ public class User {
     @Transient
     private String avatar;
 
-
-    public User() {
-    }
-
-    public User(long id) {
-        this.id = id;
-    }
-
-    public String getAvatar() {
-        return avatar;
     @PrePersist
     public void prePersist() {
         if (this.name == null || this.name.trim().isEmpty()) {
             this.name = "user" + UUID.randomUUID().toString().substring(0, 8);
         }
     }
+    public User(long id) {
+        this.id = id;
+    }
+
 }

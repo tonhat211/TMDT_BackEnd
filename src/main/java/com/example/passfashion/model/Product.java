@@ -67,6 +67,25 @@ public class Product {
     @Column(name = "created_at", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP", nullable = false, updatable = false, insertable = false)
     private LocalDateTime createdAt;
 
+    @Column(name = "unsigned_name", nullable = true)
+    private String unsignedName;
+
+    @PrePersist
+    @PreUpdate
+    public void prepare() {
+        this.unsignedName = VietnameseUtils.removeVietnameseDiacritics(this.name).toLowerCase();
+    }
+
+
+    public String getUnsignedName() {
+        return unsignedName;
+    }
+
+    public void setUnsignedName(String unsignedName) {
+        this.unsignedName = unsignedName;
+    }
+
+
     public Product() {
     }
 
