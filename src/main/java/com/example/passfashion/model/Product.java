@@ -7,6 +7,19 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
 @Entity
 @Table(name = "products")
 public class Product {
@@ -54,30 +67,7 @@ public class Product {
     @Column(name = "created_at", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP", nullable = false, updatable = false, insertable = false)
     private LocalDateTime createdAt;
 
-
-    @Column(name = "unsigned_name", nullable = true)
-    private String unsignedName;
-
-    @PrePersist
-    @PreUpdate
-    public void prepare() {
-        this.unsignedName = VietnameseUtils.removeVietnameseDiacritics(this.name).toLowerCase();
-    }
-
-
-    public String getUnsignedName() {
-        return unsignedName;
-    }
-
-    public void setUnsignedName(String unsignedName) {
-        this.unsignedName = unsignedName;
-    }
-
     public Product() {
-    }
-
-    public Product(long id) {
-        this.id = id;
     }
 
     public Product(long id, String name, double price, List<Image> images) {
