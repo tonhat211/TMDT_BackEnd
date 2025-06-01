@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -21,8 +22,15 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     """)
     Page<Product> findByCategory(@Param("categoryLink") String categoryLink, Pageable pageable);
 
-
     Optional<Product> findById(Long id);
+
+    @Query("""
+    SELECT p FROM Product p
+    WHERE p.isDeleted = 0 
+    AND p.isSold = 0
+    """)
+    Page<Product> findNewest(Pageable pageable);
+
 
 }
 

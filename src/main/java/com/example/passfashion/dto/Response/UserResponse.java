@@ -1,18 +1,25 @@
 package com.example.passfashion.dto.Response;
 
-import com.example.passfashion.model.Image;
-import lombok.*;
-
 import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserResponse {
-    private String name;
-    private String email;
-    private LocalDate birthday;
-    private String phone;
-    private String imageUrl;
-
+    String name;
+    String email;
+    LocalDate birthday;
+    String phone;
+    String imageUrl;
+    String token;
 }

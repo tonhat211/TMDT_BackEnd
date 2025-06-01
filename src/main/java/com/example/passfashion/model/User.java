@@ -3,21 +3,18 @@ package com.example.passfashion.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.example.passfashion.model.enums.Role;
+
 @Entity
-@Data
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
@@ -55,8 +52,15 @@ public class User {
     @Column(name = "total_review", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int totalReview;
 
-    @Column(name = "is_deleted", nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int isDeleted;
+    @Column(name = "is_deleted", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean isDeleted;
+
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @Column(name = "is_verified", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean isVerified;
 
     @Transient
     private String avatar;
@@ -67,4 +71,9 @@ public class User {
             this.name = "user" + UUID.randomUUID().toString().substring(0, 8);
         }
     }
+
+    public User(long id) {
+        this.id = id;
+    }
+
 }

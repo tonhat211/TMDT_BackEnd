@@ -20,14 +20,6 @@ public class Image {
         this.id = id;
     }
 
-    public String getTitle() {
-        return url;
-    }
-
-    public void setTitle(String title) {
-        this.url = title;
-    }
-
     public String getUrl() {
         return url;
     }

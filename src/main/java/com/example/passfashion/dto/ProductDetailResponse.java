@@ -34,7 +34,7 @@ public class ProductDetailResponse {
         else
             this.isSold = false;
 
-        owner = new User();
+        owner = new User(user.getId());
         owner.setId(user.getId());
         owner.setName(user.getName());
         owner.setRating(user.getRating());
