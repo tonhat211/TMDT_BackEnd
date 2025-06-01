@@ -25,6 +25,8 @@ import com.example.passfashion.repository.AddressRepository;
 import com.example.passfashion.repository.UserRepository;
 import com.example.passfashion.service.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("api/v1/users")
 public class UserController {
@@ -44,7 +46,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public UserResponse register(@RequestBody RegisterRequest request) {
+    public UserResponse register(@Valid @RequestBody RegisterRequest request) {
         return userService.register(request);
     }
 
