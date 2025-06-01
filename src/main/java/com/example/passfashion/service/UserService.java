@@ -19,7 +19,6 @@ import jakarta.validation.Valid;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
-
     // public UserResponse login(@RequestBody LoginRequest request) {
     // Optional<User> user = userRepository.findByEmailAndPwd(request.getEmail(),
     // request.getPwd());

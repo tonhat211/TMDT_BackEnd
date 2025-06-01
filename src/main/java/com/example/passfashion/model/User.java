@@ -71,9 +71,8 @@ public class User {
             this.name = "user" + UUID.randomUUID().toString().substring(0, 8);
         }
     }
-
+  
     public User(long id) {
         this.id = id;
     }
-
 }
