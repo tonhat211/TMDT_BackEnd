@@ -19,14 +19,7 @@ import jakarta.validation.Valid;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
-    // public UserResponse login(@RequestBody LoginRequest request) {
-    // Optional<User> user = userRepository.findByEmailAndPwd(request.getEmail(),
-    // request.getPwd());
-    // if (user.isEmpty()) {
-    // throw new RuntimeException("Email hoặc mật khẩu không đúng");
-    // }
-    // return convertToUserResponse(user.get());
-    // }
+
     @Autowired
     private JwtUtil jwtUtil;
 

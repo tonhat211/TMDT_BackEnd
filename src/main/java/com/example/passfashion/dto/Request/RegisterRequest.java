@@ -29,5 +29,33 @@ public class RegisterRequest {
     // String confirmPwd;
     @NotBlank(message = "Số điện thoại không được để trống")
     @Pattern(regexp = "^\\d{10}$", message = "Số điện thoại không hợp lệ")
+
     String phone;
+
+    // Getter methods
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    // setter
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.example.passfashion.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.passfashion.dto.Response.WishlistRespone;
 import com.example.passfashion.model.Product;
 import com.example.passfashion.service.WishlistService;
 
@@ -22,8 +24,11 @@ public class WishlistController {
 
   // GET /api/v1/wishlists/{userId}
   @GetMapping("/{userId}")
-  public List<Product> getWishlistByUserId(@PathVariable Long userId) {
-    return this.wishlistService.getWishlistByUserId(userId);
+  public List<WishlistRespone> getWishlistByUserId(@PathVariable Long userId) {
+    // get all wishlist product from userID
+    List<Product> wishlist = wishlistService.getWishlistByUserId(userId);
+
+    return wishlist.stream().map(WishlistRespone::new).toList();
   }
 
   // POST /api/v1/wishlists/{userId}/add/{productId}
@@ -31,8 +36,14 @@ public class WishlistController {
   public ResponseEntity<String> addProductToWishlist(
       @PathVariable Long userId,
       @PathVariable Long productId) {
-    return wishlistService.addProductToWishlist(userId, productId)
-        .map(product -> ResponseEntity.ok("Product added to wishlist successfully"))
-        .orElse(ResponseEntity.badRequest().body("Failed to add product to wishlist"));
+
+    Optional<String> result = wishlistService.addProductToWishlist(userId, productId);
+
+    if (result.isEmpty()) {
+      return ResponseEntity.ok("Product added to wishlist successfully");
+    } else {
+      return ResponseEntity.badRequest().body(result.get());
+    }
   }
+
 }

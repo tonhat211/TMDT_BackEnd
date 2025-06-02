@@ -36,8 +36,8 @@ public interface WishlistRepo extends JpaRepository<WishList, Long> {
   default Optional<String> addProductToWishlist(Long userId, Long productId) {
     int rowsAffected = insertIfNotExists(userId, productId);
     return rowsAffected > 0
-        ? Optional.of("Product added to wishlist")
-        : Optional.empty();
+        ? Optional.empty() // Thêm thành công -> không có lỗi
+        : Optional.of("Product already exists in wishlist");
   }
 
   @Transactional
