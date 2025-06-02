@@ -22,7 +22,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-
 @RestController
 @RequestMapping("api/v1/products")
 public class ProductController {
@@ -38,7 +37,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    //localhost:8080/api/v1/product/tui-xach?sortBy=price&direction=asc&page=0&size=10
+    // localhost:8080/api/v1/product/tui-xach?sortBy=price&direction=asc&page=0&size=10
     @PostMapping("/{categoryCode}")
     public ResponseEntity<Page<BasicProductResponse>> findByCategory(
             @PathVariable String categoryCode,
@@ -47,32 +46,29 @@ public class ProductController {
             @RequestParam(defaultValue = "price") String sortBy,
             @RequestParam(defaultValue = "desc") String direction) {
 
-        System.out.println("/product/"+categoryCode+"\tpage: " + page);
+        System.out.println("/product/" + categoryCode + "\tpage: " + page);
         Sort sort = Sort.by(Sort.Direction.fromString(direction), sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Product> productPage = productRepository.findByCategory(categoryCode, pageable);
-        Page<BasicProductResponse> result = productPage.map(product ->
-                new BasicProductResponse(
-                        product.getId(),
-                        product.getName(),
-                        product.getPrice(),
-                        product.getImages(),
-                        product.getIsSold()
-                )
-        );
+        Page<BasicProductResponse> result = productPage.map(product -> new BasicProductResponse(
+                product.getId(),
+                product.getName(),
+                product.getPrice(),
+                product.getImages(),
+                product.getIsSold()));
         return ResponseEntity.ok(result);
     }
 
     @PostMapping("/detail/{id}")
     public ResponseEntity<ProductDetailResponse> findById(
             @PathVariable long id) {
-        System.out.println("/product/detail/"+id);
+        System.out.println("/product/detail/" + id);
         Product product = productRepository.findById(id).orElse(null);
         Category category = product.getCategory();
         User owner = product.getUser();
         List<Image> images = product.getImages();
         List<CommentResponse> comments = commentService.findCommentByProductId(id);
-        ProductDetailResponse result = new ProductDetailResponse(product,category,images,owner,comments);
+        ProductDetailResponse result = new ProductDetailResponse(product, category, images, owner, comments);
         return ResponseEntity.ok(result);
     }
 
@@ -84,7 +80,7 @@ public class ProductController {
             @RequestParam(defaultValue = "price") String sortBy,
             @RequestParam(defaultValue = "desc") String direction) {
 
-        System.out.println("products/search?keyword="+keyword);
+        System.out.println("products/search?keyword=" + keyword);
         Sort sort = Sort.by(Sort.Direction.fromString(direction), sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
         String[] tokens = keyword.split(" ");
@@ -94,17 +90,14 @@ public class ProductController {
             keywords.add(token);
         }
         Page<Product> productPage = productService.searchByKeywords(keywords, pageable);
-        for(Product product : productPage.getContent()){
+        for (Product product : productPage.getContent()) {
         }
-        Page<BasicProductResponse> result = productPage.map(product ->
-                new BasicProductResponse(
-                        product.getId(),
-                        product.getName(),
-                        product.getPrice(),
-                        product.getImages(),
-                        product.getIsSold()
-                )
-        );
+        Page<BasicProductResponse> result = productPage.map(product -> new BasicProductResponse(
+                product.getId(),
+                product.getName(),
+                product.getPrice(),
+                product.getImages(),
+                product.getIsSold()));
         return ResponseEntity.ok(result);
     }
 
@@ -119,18 +112,13 @@ public class ProductController {
         Sort sort = Sort.by(Sort.Direction.fromString(direction), sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Product> productPage = productRepository.findNewest(pageable);
-        Page<BasicProductResponse> result = productPage.map(product ->
-                new BasicProductResponse(
-                        product.getId(),
-                        product.getName(),
-                        product.getPrice(),
-                        product.getImages(),
-                        product.getIsSold()
-                )
-        );
+        Page<BasicProductResponse> result = productPage.map(product -> new BasicProductResponse(
+                product.getId(),
+                product.getName(),
+                product.getPrice(),
+                product.getImages(),
+                product.getIsSold()));
         return ResponseEntity.ok(result);
     }
 
-
 }
-
