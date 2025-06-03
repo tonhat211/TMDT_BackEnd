@@ -77,6 +77,9 @@ public class User {
     @Column(name = "is_verified", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean isVerified;
 
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
+
     @Transient
     private String avatar;
 
