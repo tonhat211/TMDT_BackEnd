@@ -41,7 +41,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/login")
-    public UserResponse login(@RequestBody LoginRequest request) {
+    public UserResponse login(@Valid @RequestBody LoginRequest request) {
         return userService.login(request);
     }
 
@@ -54,18 +54,11 @@ public class UserController {
     public UserResponse getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
-    // **********************************
 
-    // @GetMapping("/{id}")
-    // public UserResponse getUserById(@PathVariable long id) {
-    // Optional<User> userOptional = userRepository.findById(id);
-    // if (userOptional.isEmpty()) {
-    // throw new RuntimeException("User not found with id: " + id);
-    // }
-    // User user = userOptional.get();
-    // return new UserResponse(user.getName(), user.getEmail(), user.getBirthday(),
-    // user.getPhone(),
-    // user.getImage().getUrl());
+    // @PostMapping("/forgot-password")
+    // public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordRequest request) {
+    //     userService.sendPasswordResetEmail(request.getEmail());
+    //     return ResponseEntity.ok("Email reset mật khẩu đã được gửi");
     // }
 
     @PutMapping("/{id}")
