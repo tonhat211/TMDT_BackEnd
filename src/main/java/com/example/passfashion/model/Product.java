@@ -1,11 +1,10 @@
 package com.example.passfashion.model;
 
-import com.example.passfashion.utils.VietnameseUtils;
-import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.passfashion.utils.VietnameseUtils;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -18,6 +17,8 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
@@ -48,15 +49,11 @@ public class Product {
     private String description;
 
     @ManyToMany
-    @JoinTable(
-            name = "image_products",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "image_id")
-    )
-    private List<Image> images=new ArrayList<>();
+    @JoinTable(name = "image_products", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "image_id"))
+    private List<Image> images = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments=new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 
     @Column(name = "is_sold", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int isSold;
@@ -76,7 +73,6 @@ public class Product {
         this.unsignedName = VietnameseUtils.removeVietnameseDiacritics(this.name).toLowerCase();
     }
 
-
     public String getUnsignedName() {
         return unsignedName;
     }
@@ -84,7 +80,6 @@ public class Product {
     public void setUnsignedName(String unsignedName) {
         this.unsignedName = unsignedName;
     }
-
 
     public Product() {
     }

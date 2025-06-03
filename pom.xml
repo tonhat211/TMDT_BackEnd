@@ -104,7 +104,6 @@
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
-            <version>3.0.2</version>
         </dependency>
 
         <!-- Xử lý oauth cho Google và Facebook -->

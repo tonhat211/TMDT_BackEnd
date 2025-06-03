@@ -1,25 +1,24 @@
 package com.example.passfashion.controller;
 
-import com.example.passfashion.dto.BasicProductResponse;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.passfashion.dto.CommentRequest;
 import com.example.passfashion.dto.CommentResponse;
-import com.example.passfashion.dto.ProductDetailResponse;
-import com.example.passfashion.model.*;
+import com.example.passfashion.model.Comment;
+import com.example.passfashion.model.Product;
+import com.example.passfashion.model.User;
 import com.example.passfashion.repository.CommentRepository;
 import com.example.passfashion.repository.ProductRepository;
 import com.example.passfashion.repository.UserRepository;
 import com.example.passfashion.service.CommentService;
-import com.example.passfashion.service.Constant;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
-import java.util.*;
 
 @RestController
 @RequestMapping("api/v1/comments")
@@ -64,6 +63,4 @@ public class CommentController {
         return ResponseEntity.ok(result);
     }
 
-
 }
-
