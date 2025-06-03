@@ -14,7 +14,9 @@ public class ProductDetailResponse {
     private boolean isSold;
     private User owner;
     private List<CommentResponse> comments;
-    public ProductDetailResponse(Product product, Category category, List<Image> images, User user, List<CommentResponse> comments) {
+
+    public ProductDetailResponse(Product product, Category category, List<Image> images, User user,
+            List<CommentResponse> comments) {
         this.product = new Product();
         this.product.setId(product.getId());
         this.product.setName(product.getName());
@@ -24,19 +26,22 @@ public class ProductDetailResponse {
         this.category = (category);
         if (images != null && !images.isEmpty()) {
             for (Image image : images) {
-                this.images.add(Constant.PRODUCT_IMG_DIR +"/"+ image.getUrl().trim());
+                this.images.add(Constant.PRODUCT_IMG_DIR + "/" + image.getUrl().trim());
             }
         }
-        if(product.getIsSold()==1) this.isSold = true; else this.isSold = false;
+        if (product.getIsSold() == 1)
+            this.isSold = true;
+        else
+            this.isSold = false;
 
-        owner = new User();
+        owner = new User(user.getId());
         owner.setId(user.getId());
         owner.setName(user.getName());
         owner.setRating(user.getRating());
         owner.setTotalReview(user.getTotalReview());
-        if(user.getImage()!=null)
-            owner.setAvatar(Constant.AVATAR_IMG_DIR+"/"+ user.getImage().getUrl());
-//
+        if (user.getImage() != null)
+            owner.setAvatar(Constant.AVATAR_IMG_DIR + "/" + user.getImage().getUrl());
+        //
         this.comments = comments;
     }
 
