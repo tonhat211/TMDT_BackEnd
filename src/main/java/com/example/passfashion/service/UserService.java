@@ -1,7 +1,11 @@
 package com.example.passfashion.service;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -13,25 +17,16 @@ import com.example.passfashion.model.enums.Role;
 import com.example.passfashion.repository.UserRepository;
 import com.example.passfashion.security.JwtUtil;
 
-import jakarta.validation.Valid;
-
 @Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
-    // public UserResponse login(@RequestBody LoginRequest request) {
-    // Optional<User> user = userRepository.findByEmailAndPwd(request.getEmail(),
-    // request.getPwd());
-    // if (user.isEmpty()) {
-    // throw new RuntimeException("Email hoặc mật khẩu không đúng");
-    // }
-    // return convertToUserResponse(user.get());
-    // }
+
     @Autowired
     private JwtUtil jwtUtil;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     public UserResponse login(@RequestBody LoginRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
@@ -50,7 +45,7 @@ public class UserService {
             throw new RuntimeException("Email đã tồn tại");
         }
         // if (!request.getPwd().equals(request.getConfirmPwd())) {
-        // throw new RuntimeException("Mật khẩu xác nhận không khớp");
+        //     throw new RuntimeException("Mật khẩu xác nhận không khớp");
         // }
         User user = new User();
         user.setEmail(request.getEmail());

@@ -59,8 +59,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Column(name = "is_verified", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean isVerified;
+    // @Column(name = "is_verified", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    // private boolean isVerified;
 
     @Transient
     private String avatar;
@@ -71,8 +71,9 @@ public class User {
             this.name = "user" + UUID.randomUUID().toString().substring(0, 8);
         }
     }
-  
+
     public User(long id) {
         this.id = id;
     }
+
 }
