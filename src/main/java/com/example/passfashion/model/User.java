@@ -1,20 +1,37 @@
 package com.example.passfashion.model;
 
-import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import com.example.passfashion.model.enums.Role;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @Entity
+@AllArgsConstructor
+@Data
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
-@Data
-@Getter
-@Setter
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,158 +68,30 @@ public class User {
     @Column(name="total_review", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int totalReview;
 
-    @Column(name="is_deleted", nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int isDeleted;
+    @Column(name = "is_deleted", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean isDeleted;
+
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    // @Column(name = "is_verified", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    // private boolean isVerified;
 
     @Transient
     private String avatar;
 
-
-    public User() {
+    @PrePersist
+    public void prePersist() {
+        if (this.name == null || this.name.trim().isEmpty()) {
+            this.name = "user" + UUID.randomUUID().toString().substring(0, 8);
+        }
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public int getSoldOrderQty() {
-        return soldOrderQty;
-    }
-
-    public void setSoldOrderQty(int soldOrderQty) {
-        this.soldOrderQty = soldOrderQty;
-    }
-
-    public double getRating() {
-        return rating;
-    }
-
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
-
-    public int getTotalReview() {
-        return totalReview;
-    }
-
-    public void setTotalReview(int totalReview) {
-        this.totalReview = totalReview;
-    }
-
-    public Image getImage() {
-        return image;
+    public User(long id) {
+        this.id = id;
     }
 
 
-//    public void setSaledOrderQty(int saledOrderQty) {
-//        this.saledOrderQty = saledOrderQty;
-//
-//    public String getPhone() {
-//        return phone;
-//    }
-//
-//    public void setPhone(String phone) {
-//        this.phone = phone;
-//    }
-//
-//    public String getAvatar() {
-//        return avatar;
-//    }
-//
-//    public void setAvatar(String avatar) {
-//        this.avatar = avatar;
-//    }
-//
-//    public int getSoldOrderQty() {
-//        return soldOrderQty;
-//    }
-//
-//    public void setSoldOrderQty(int soldOrderQty) {
-//        this.soldOrderQty = soldOrderQty;
-//    }
-//
-//    public int getRating() {
-//        return rating;
-//    }
-//
-//    public void setRating(int rating) {
-//        this.rating = rating;
-//    }
-//
-//    public int getTotalReview() {
-//        return totalReview;
-//    }
-//
-//    public void setTotalReview(int totalReview) {
-//        this.totalReview = totalReview;
-//    }
-//
-//    public Image getImage() {
-//        return image;
-//    }
-//
-//    public void setImage(Image image) {
-//        this.image = image;
-//
-//
-//
-//    public long getId() {
-//        return id;
-//    }
-//
-//    public void setId(long id) {
-//        this.id = id;
-//    }
-//
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-//
-//    public String getEmail() {
-//        return email;
-//    }
-//
-//    public void setEmail(String email) {
-//        this.email = email;
-//    }
-//
-//    public String getPwd() {
-//        return pwd;
-//    }
-//
-//    public void setPwd(String pwd) {
-//        this.pwd = pwd;
-//    }
-//
-//    public LocalDate getBirthday() {
-//        return birthday;
-//    }
-//
-//    public void setBirthday(LocalDate birthday) {
-//        this.birthday = birthday;
-//    }
-//
-//    public List<Address> getAddresses() {
-//        return addresses;
-//    }
-//
-//    public void setAddresses(List<Address> addresses) {
-//        this.addresses = addresses;
-//    }
-//
-//    public int getIsDeleted() {
-//        return isDeleted;
-//    }
-//
-//    public void setIsDeleted(int isDeleted) {
-//        this.isDeleted = isDeleted;
-//    }
+
 }
