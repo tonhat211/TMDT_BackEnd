@@ -1,6 +1,6 @@
 package com.example.passfashion.controller;
 
-import com.example.passfashion.dto.CategoryCountResponse;
+import com.example.passfashion.dto.Response.CategoryCountResponse;
 import com.example.passfashion.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

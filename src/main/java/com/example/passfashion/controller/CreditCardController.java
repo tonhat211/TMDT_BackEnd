@@ -13,6 +13,7 @@ import com.example.passfashion.repository.AddressRepository;
 import com.example.passfashion.repository.CategoryRepository;
 import com.example.passfashion.repository.CreditCardRepository;
 import com.example.passfashion.repository.UserRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +38,7 @@ public class CreditCardController {
     }
 
     @PutMapping("/update/{id}")
-    public boolean updateCardById(@PathVariable long id, @RequestBody CreditCardRequest request) throws Exception {
+    public boolean updateCardById(@PathVariable long id, @Valid @RequestBody CreditCardRequest request) throws Exception {
         CreditCard creditCard = creditCardRepository.findById(id).orElseThrow(Exception::new);
         creditCard.setNumber(request.getNumber());
         creditCard.setOwnerName(request.getOwnerName());
@@ -48,7 +49,7 @@ public class CreditCardController {
     }
 
     @PostMapping("/add-card")
-    public boolean addCreditCard(@RequestBody CreditCardRequest request) {
+    public boolean addCreditCard(@Valid@RequestBody CreditCardRequest request) {
         CreditCard creditCard = new CreditCard();
         User user = userRepository.findById(request.getUserId()).orElseThrow();
         creditCard.setUser(user);

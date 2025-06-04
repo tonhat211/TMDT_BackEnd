@@ -1,4 +1,4 @@
-package com.example.passfashion.dto;
+package com.example.passfashion.dto.Request;
 
 public class CommentRequest {
     private long userId;

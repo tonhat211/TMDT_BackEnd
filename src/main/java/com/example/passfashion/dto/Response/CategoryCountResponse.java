@@ -1,4 +1,4 @@
-package com.example.passfashion.dto;
+package com.example.passfashion.dto.Response;
 // dung trong home, dem so luong cua moi category
 public class CategoryCountResponse {
     private String link;

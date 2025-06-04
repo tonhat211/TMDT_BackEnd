@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -72,5 +73,11 @@ public class UserService {
         response.setPhone(user.getPhone());
         response.setImageUrl(user.getImage() != null ? user.getImage().getUrl() : null);
         return response;
+    }
+
+    public User getCurrentUser() {
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return userRepository.findByEmail(email).orElseThrow();
     }
 }

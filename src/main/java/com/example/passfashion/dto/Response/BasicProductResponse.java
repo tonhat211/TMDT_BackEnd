@@ -1,4 +1,4 @@
-package com.example.passfashion.dto;
+package com.example.passfashion.dto.Response;
 
 import com.example.passfashion.model.Image;
 import com.example.passfashion.service.Constant;

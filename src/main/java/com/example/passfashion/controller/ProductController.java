@@ -1,8 +1,8 @@
 package com.example.passfashion.controller;
 
-import com.example.passfashion.dto.BasicProductResponse;
-import com.example.passfashion.dto.CommentResponse;
-import com.example.passfashion.dto.ProductDetailResponse;
+import com.example.passfashion.dto.Response.BasicProductResponse;
+import com.example.passfashion.dto.Response.CommentResponse;
+import com.example.passfashion.dto.Response.ProductDetailResponse;
 import com.example.passfashion.model.*;
 import com.example.passfashion.repository.CommentRepository;
 import com.example.passfashion.repository.ProductRepository;
@@ -18,9 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/products")
