@@ -91,5 +91,7 @@ public class ProductDetailResponse {
 
     public void setComments(List<CommentResponse> comments) {
         this.comments = comments;
+
     }
+
 }

@@ -36,36 +36,35 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name="name", nullable = false)
+    @Column(name = "name", nullable = true)
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id", referencedColumnName = "id")
     private Image image;
 
-
-    @Column(name="email", nullable = false)
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name="pwd", nullable = false)
+    @Column(name = "pwd", nullable = false)
     private String pwd;
 
-    @Column(name="birthday", nullable = true)
+    @Column(name = "birthday", nullable = true)
     private LocalDate birthday;
 
-    @Column(name="phone", nullable = true)
+    @Column(name = "phone", nullable = true)
     private String phone;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Address> addresses=new ArrayList<>();
+    private List<Address> addresses = new ArrayList<>();
 
-    @Column(name="sold_order_qty", nullable = false, columnDefinition = "INT DEFAULT 0")
+    @Column(name = "sold_order_qty", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int soldOrderQty;
 
     @Column(name="rating", nullable = false, columnDefinition = "DOUBLE DEFAULT 0")
     private double rating;
 
-    @Column(name="total_review", nullable = false, columnDefinition = "INT DEFAULT 0")
+    @Column(name = "total_review", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int totalReview;
 
     @Column(name = "is_deleted", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
@@ -75,8 +74,11 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    // @Column(name = "is_verified", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    // @Column(name = "is_verified", nullable = false, columnDefinition = "BOOLEAN
+    // DEFAULT FALSE")
     // private boolean isVerified;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orders = new ArrayList<>();
 
     @Transient
     private String avatar;

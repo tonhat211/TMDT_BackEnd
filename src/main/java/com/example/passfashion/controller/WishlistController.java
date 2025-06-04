@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.passfashion.dto.Response.WishlistRespone;
+import com.example.passfashion.dto.Response.WishlistResponse;
 import com.example.passfashion.model.Product;
 import com.example.passfashion.service.WishlistService;
 
@@ -24,11 +24,18 @@ public class WishlistController {
 
   // GET /api/v1/wishlists/{userId}
   @GetMapping("/{userId}")
-  public List<WishlistRespone> getWishlistByUserId(@PathVariable Long userId) {
+  public ResponseEntity<List<WishlistResponse>> getWishlistByUserId(@PathVariable Long userId) {
     // get all wishlist product from userID
     List<Product> wishlist = wishlistService.getWishlistByUserId(userId);
+    if (wishlist.isEmpty()) {
+      return ResponseEntity.noContent().build();
+    }
+    // map product to wishlist response
+    List<WishlistResponse> wishlistResponses = wishlist.stream()
+        .map(WishlistResponse::new)
+        .toList();
 
-    return wishlist.stream().map(WishlistRespone::new).toList();
+    return ResponseEntity.ok(wishlistResponses);
   }
 
   // POST /api/v1/wishlists/{userId}/add/{productId}
