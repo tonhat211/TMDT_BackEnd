@@ -26,10 +26,6 @@ public class RegisterRequest {
     @Size(min = 8, message = "Mật khẩu phải có ít nhất 8 ký tự")
     String pwd;
 
-    // @NotBlank(message = "Nhập lại mật khẩu không được để trống")
-    // @Size(min = 8, message = "Mật khẩu phải có ít nhất 8 ký tự")
-    // String confirmPwd;
-
     @NotBlank(message = "Số điện thoại không được để trống")
     @Pattern(regexp = "^\\d{10}$", message = "Số điện thoại không hợp lệ")
 

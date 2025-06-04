@@ -106,4 +106,9 @@ public class UserController {
         addressRepository.save(address);
         return true;
     }
+
+    @GetMapping("/me")
+    public User getCurrentUser() {
+        return userService.getCurrentUser();
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.passfashion.dto;
+package com.example.passfashion.dto.Request;
 
 public class ProductRequest {
     private long categoryId;

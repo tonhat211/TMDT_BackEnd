@@ -21,7 +21,6 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
@@ -62,8 +61,8 @@ public class User {
     @Column(name = "sold_order_qty", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int soldOrderQty;
 
-    @Column(name = "rating", nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int rating;
+    @Column(name="rating", nullable = false, columnDefinition = "DOUBLE DEFAULT 0")
+    private double rating;
 
     @Column(name = "total_review", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int totalReview;
@@ -98,101 +97,61 @@ public class User {
     public User() {
     }
 
-    // getters and setter
-    public void setEmail(String email) {
-        this.email = email;
+
+    public long getId() {
+        return id;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
-    }
-
-    public String getPwd() {
-        return pwd;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
-    }
-
-    public LocalDate getBirthday() {
-        return birthday;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Image getImage() {
         return image;
     }
 
-    public void setSoldOrderQty(int soldOrderQty) {
-        this.soldOrderQty = soldOrderQty;
+    public void setImage(Image image) {
+        this.image = image;
     }
 
-    public int getSoldOrderQty() {
-        return soldOrderQty;
+    public String getEmail() {
+        return email;
     }
 
-    public void setRating(int rating) {
-        this.rating = rating;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public int getRating() {
-        return rating;
+    public String getPwd() {
+        return pwd;
     }
 
-    public void setTotalReview(int totalReview) {
-        this.totalReview = totalReview;
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
 
-    public int getTotalReview() {
-        return totalReview;
+    public LocalDate getBirthday() {
+        return birthday;
     }
 
-    public void setDeleted(boolean isDeleted) {
-        this.isDeleted = isDeleted;
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
     }
 
-    public boolean isDeleted() {
-        return isDeleted;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getAvatar() {
-        return avatar;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public List<Address> getAddresses() {
@@ -203,21 +162,43 @@ public class User {
         this.addresses = addresses;
     }
 
-    public List<Order> getOrders() {
-        return orders;
+    public int getSoldOrderQty() {
+        return soldOrderQty;
     }
 
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-
+    public void setSoldOrderQty(int soldOrderQty) {
+        this.soldOrderQty = soldOrderQty;
     }
 
-    public Long getId() {
-        return id;
+    public double getRating() {
+        return rating;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 
+    public int getTotalReview() {
+        return totalReview;
+    }
+
+    public void setTotalReview(int totalReview) {
+        this.totalReview = totalReview;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 }

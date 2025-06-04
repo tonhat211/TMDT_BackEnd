@@ -1,11 +1,9 @@
 package com.example.passfashion.service;
 
-import com.example.passfashion.dto.CommentResponse;
-import com.example.passfashion.model.Comment;
+import com.example.passfashion.dto.Response.CommentResponse;
 import com.example.passfashion.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.*;
 

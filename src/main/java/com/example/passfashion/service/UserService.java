@@ -1,6 +1,11 @@
 package com.example.passfashion.service;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,7 +46,7 @@ public class UserService {
             throw new RuntimeException("Email đã tồn tại");
         }
         // if (!request.getPwd().equals(request.getConfirmPwd())) {
-        // throw new RuntimeException("Mật khẩu xác nhận không khớp");
+        //     throw new RuntimeException("Mật khẩu xác nhận không khớp");
         // }
         User user = new User();
         user.setEmail(request.getEmail());
@@ -68,5 +73,11 @@ public class UserService {
         response.setPhone(user.getPhone());
         response.setImageUrl(user.getImage() != null ? user.getImage().getUrl() : null);
         return response;
+    }
+
+    public User getCurrentUser() {
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return userRepository.findByEmail(email).orElseThrow();
     }
 }
