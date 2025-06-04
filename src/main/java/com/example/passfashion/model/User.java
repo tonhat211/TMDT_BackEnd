@@ -21,6 +21,7 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
@@ -77,9 +78,8 @@ public class User {
     // @Column(name = "is_verified", nullable = false, columnDefinition = "BOOLEAN
     // DEFAULT FALSE")
     // private boolean isVerified;
-
-    @OneToMany(mappedBy = "user")
-    private List<Order> orders;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orders = new ArrayList<>();
 
     @Transient
     private String avatar;

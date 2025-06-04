@@ -2,6 +2,7 @@ package com.example.passfashion.model;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,28 +30,25 @@ public class Order {
   private Double total;
 
   // Map đến User
-  @ManyToOne
+
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
 
-  // Map đến AddressOrder
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "address_order_id")
+  @OneToOne
+  @JoinColumn(name = "address_order_id", nullable = false)
   private AddressOrder addressOrder;
 
-  // Map đến CardOrder
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "card_order_id")
+  @OneToOne
+  @JoinColumn(name = "card_order_id", nullable = false)
   private CardOrder cardOrder;
 
-  // Map đến ProductOrder
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "product_order_id")
+  @OneToOne
+  @JoinColumn(name = "product_order_id", nullable = false)
   private ProductOrder productOrder;
 
-  // Map đến VoucherOrder
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "voucher_order_id")
+  @OneToOne
+  @JoinColumn(name = "voucher_order_id", nullable = false)
   private VoucherOrder voucherOrder;
 
   // Getters and Setters

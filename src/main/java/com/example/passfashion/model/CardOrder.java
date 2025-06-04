@@ -1,6 +1,6 @@
 package com.example.passfashion.model;
 
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,14 +15,26 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "card_orders")
+@Table(name = "card_order")
 public class CardOrder {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @JsonProperty("cardNumber")
   private String cardNumber;
+  @JsonProperty("ownerName")
   private String ownerName;
-  private String type;
-  private LocalDate expirationDate;
+  @JsonProperty("cardType")
+  private String cardType;
+
+  @Override
+  public String toString() {
+    return "CardOrder{" +
+        "id=" + id +
+        ", cardNumber='" + cardNumber + '\'' +
+        ", ownerName='" + ownerName + '\'' +
+        ", cardType='" + cardType + '\'' +
+        '}';
+  }
 }

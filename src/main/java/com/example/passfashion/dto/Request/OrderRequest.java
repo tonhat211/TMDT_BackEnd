@@ -4,6 +4,7 @@ import com.example.passfashion.model.AddressOrder;
 import com.example.passfashion.model.CardOrder;
 import com.example.passfashion.model.ProductOrder;
 import com.example.passfashion.model.VoucherOrder;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,9 +19,13 @@ public class OrderRequest {
   private String phone; // Số điện thoại người nhận
   private Double total; // Tổng tiền đơn hàng
 
+  @JsonProperty("addressOrder")
   private AddressOrder addressOrder; // Địa chỉ nhận hàng
+  @JsonProperty("cardOrder")
   private CardOrder cardOrder; // Thông tin thẻ (nếu có)
+  @JsonProperty("productOrder")
   private ProductOrder productOrder; // Sản phẩm đã chọn
+  @JsonProperty("voucherOrder")
   private VoucherOrder voucherOrder;
 
   // getters and setters
@@ -86,6 +91,19 @@ public class OrderRequest {
 
   public void setVoucherOrder(VoucherOrder voucherOrder) {
     this.voucherOrder = voucherOrder;
+  }
+
+  public String toString() {
+    return "OrderRequest{" +
+        "idUser=" + idUser +
+        ", email='" + email + '\'' +
+        ", phone='" + phone + '\'' +
+        ", total=" + total +
+        ", addressOrder=" + addressOrder.toString() +
+        ", cardOrder=" + cardOrder.toString() +
+        ", productOrder=" + productOrder.toString() +
+        ", voucherOrder=" + voucherOrder.toString() +
+        '}';
   }
 
 }

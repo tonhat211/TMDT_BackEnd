@@ -1,5 +1,7 @@
 package com.example.passfashion.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,15 +15,30 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "address_orders")
+@Table(name = "address_order")
 public class AddressOrder {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private String addressLine;
-  private String city;
-  private String district;
+  @JsonProperty("street")
+  private String street;
+  @JsonProperty("ward")
   private String ward;
+  @JsonProperty("district")
+  private String district;
+  @JsonProperty("city")
+  private String city;
+
+  @Override
+  public String toString() {
+    return "AddressOrder{" +
+        "id=" + id +
+        ", street='" + street + '\'' +
+        ", ward='" + ward + '\'' +
+        ", district='" + district + '\'' +
+        ", city='" + city + '\'' +
+        '}';
+  }
 }

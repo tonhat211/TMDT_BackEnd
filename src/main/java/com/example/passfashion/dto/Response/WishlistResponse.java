@@ -44,15 +44,65 @@ public class WishlistResponse {
   public long getId() {
     return id;
   }
+
   public void setId(long id) {
     this.id = id;
   }
+
   public String getName() {
     return name;
   }
+
   public void setName(String name) {
     this.name = name;
   }
-  
+
+  public double getPrice() {
+    return price;
+  }
+
+  public void setPrice(double price) {
+    this.price = price;
+  }
+
+  public String getCategoryName() {
+    return categoryName;
+  }
+
+  public void setCategoryName(String categoryName) {
+    this.categoryName = categoryName;
+  }
+
+  public String getImageUrl() {
+    return imageUrl;
+  }
+
+  public void setImageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
+  }
+
+  public int getQty() {
+    return qty;
+  }
+
+  public void setQty(int qty) {
+    this.qty = qty;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public List<String> getImageUrls() {
+    return imageUrls;
+  }
+
+  public void setImageUrls(List<String> imageUrls) {
+    this.imageUrls = imageUrls;
+  }
 
 }
