@@ -74,8 +74,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Column(name = "is_verified", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean isVerified;
+    // @Column(name = "is_verified", nullable = false, columnDefinition = "BOOLEAN
+    // DEFAULT FALSE")
+    // private boolean isVerified;
 
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
@@ -90,138 +91,133 @@ public class User {
         }
     }
 
-    //
     public User(long id) {
         this.id = id;
     }
-    // setter
 
-    /**
-     * 
-     */
     public User() {
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
-    }
-
+    // getters and setter
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
-    }
-
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
-    }
-
-    public void setSoldOrderQty(int soldOrderQty) {
-        this.soldOrderQty = soldOrderQty;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
-    public void setTotalReview(int totalReview) {
-        this.totalReview = totalReview;
-    }
-
-    public void setDeleted(boolean isDeleted) {
-        this.isDeleted = isDeleted;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public void setVerified(boolean isVerified) {
-        this.isVerified = isVerified;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-
-    }
-
-    // Getter
-    public long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Image getImage() {
-        return image;
     }
 
     public String getEmail() {
         return email;
     }
 
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
     public String getPwd() {
         return pwd;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
     }
 
     public LocalDate getBirthday() {
         return birthday;
     }
 
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public String getPhone() {
         return phone;
     }
 
-    public List<Address> getAddresses() {
-        return addresses;
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setSoldOrderQty(int soldOrderQty) {
+        this.soldOrderQty = soldOrderQty;
     }
 
     public int getSoldOrderQty() {
         return soldOrderQty;
     }
 
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
     public int getRating() {
         return rating;
+    }
+
+    public void setTotalReview(int totalReview) {
+        this.totalReview = totalReview;
     }
 
     public int getTotalReview() {
         return totalReview;
     }
 
+    public void setDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     public boolean isDeleted() {
         return isDeleted;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public Role getRole() {
         return role;
     }
 
-    public boolean isVerified() {
-        return isVerified;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getAvatar() {
         return avatar;
+    }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
 }

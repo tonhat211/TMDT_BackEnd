@@ -1,7 +1,7 @@
 package com.example.passfashion.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -13,8 +13,6 @@ import com.example.passfashion.model.enums.Role;
 import com.example.passfashion.repository.UserRepository;
 import com.example.passfashion.security.JwtUtil;
 
-import jakarta.validation.Valid;
-
 @Service
 public class UserService {
     @Autowired
@@ -24,7 +22,7 @@ public class UserService {
     private JwtUtil jwtUtil;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     public UserResponse login(@RequestBody LoginRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
