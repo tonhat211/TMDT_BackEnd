@@ -22,23 +22,13 @@ public class AddressOrder {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @JsonProperty("street")
-  private String street;
-  @JsonProperty("ward")
-  private String ward;
-  @JsonProperty("district")
-  private String district;
-  @JsonProperty("city")
-  private String city;
+  @JsonProperty("address")
+  private String address;
 
   @Override
   public String toString() {
     return "AddressOrder{" +
         "id=" + id +
-        ", street='" + street + '\'' +
-        ", ward='" + ward + '\'' +
-        ", district='" + district + '\'' +
-        ", city='" + city + '\'' +
-        '}';
+        ", address='" + address + '\'';
   }
 }
