@@ -21,20 +21,13 @@ public class CardOrder {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @JsonProperty("cardNumber")
-  private String cardNumber;
-  @JsonProperty("ownerName")
-  private String ownerName;
-  @JsonProperty("cardType")
-  private String cardType;
+  @JsonProperty("cardInfor")
+  private String cardInfor;
 
   @Override
   public String toString() {
     return "CardOrder{" +
         "id=" + id +
-        ", cardNumber='" + cardNumber + '\'' +
-        ", ownerName='" + ownerName + '\'' +
-        ", cardType='" + cardType + '\'' +
-        '}';
+        ", cardInfor='" + cardInfor + '\'';
   }
 }
