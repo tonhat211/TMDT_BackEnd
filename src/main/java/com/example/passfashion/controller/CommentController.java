@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.passfashion.dto.CommentRequest;
-import com.example.passfashion.dto.CommentResponse;
+import com.example.passfashion.dto.Request.CommentRequest;
+import com.example.passfashion.dto.Response.CommentResponse;
 import com.example.passfashion.model.Comment;
 import com.example.passfashion.model.Product;
 import com.example.passfashion.model.User;

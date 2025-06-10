@@ -1,4 +1,4 @@
-package com.example.passfashion.dto;
+package com.example.passfashion.dto.Response;
 
 import com.example.passfashion.model.*;
 import com.example.passfashion.service.Constant;
@@ -29,7 +29,7 @@ public class ProductDetailResponse {
                 this.images.add(Constant.PRODUCT_IMG_DIR + "/" + image.getUrl().trim());
             }
         }
-        if (product.getIsSold() == 1)
+        if (product.getIsSold())
             this.isSold = true;
         else
             this.isSold = false;
@@ -91,5 +91,7 @@ public class ProductDetailResponse {
 
     public void setComments(List<CommentResponse> comments) {
         this.comments = comments;
+
     }
+
 }

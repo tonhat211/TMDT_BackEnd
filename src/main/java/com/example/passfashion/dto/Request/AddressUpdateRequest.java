@@ -44,4 +44,28 @@ public class AddressUpdateRequest {
         return phone;
     }
 
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public void setWard(String ward) {
+        this.ward = ward;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 }

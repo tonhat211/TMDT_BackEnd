@@ -1,5 +1,7 @@
 package com.example.passfashion.config;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +12,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 import com.example.passfashion.security.JwtAuthenticationFilter;
 
 @Configuration
@@ -29,15 +35,18 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/v1/products/**").permitAll()
+                        .requestMatchers("/api/v1/products/create").authenticated()
+                        .requestMatchers("/api/v1/upload").authenticated() // Yêu cầu xác thực
                         .requestMatchers("/api/v1/comments/**").permitAll()
                         .requestMatchers("/api/v1/categories/**").permitAll()
                         .requestMatchers("/api/v1/wishlists/**").permitAll()
+                        .requestMatchers("/api/v1/credit_card/**").permitAll()
                         .requestMatchers("/api/v1/users/**").permitAll()
+                        .requestMatchers("/api/v1/orders/**").permitAll()
+                        .requestMatchers("/uploads/**").permitAll() // Cho phép truy cập file đã upload
                         .requestMatchers("/images/**", "/css/**", "/js/**").permitAll()
-                        .anyRequest().authenticated());
-
-        // Đưa JWT filter vào trước khi filter kiểm tra UsernamePasswordAuthentication
-        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                        .anyRequest().authenticated())
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -46,5 +55,4 @@ public class SecurityConfig {
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }

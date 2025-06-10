@@ -36,6 +36,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Column(name = "name", nullable = true)
     private String name;
 
@@ -61,8 +62,8 @@ public class User {
     @Column(name = "sold_order_qty", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int soldOrderQty;
 
-    @Column(name = "rating", nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int rating;
+    @Column(name = "rating", nullable = false, columnDefinition = "DOUBLE DEFAULT 0")
+    private double rating;
 
     @Column(name = "total_review", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int totalReview;
@@ -74,8 +75,11 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    // @Column(name = "is_verified", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    // @Column(name = "is_verified", nullable = false, columnDefinition = "BOOLEAN
+    // DEFAULT FALSE")
     // private boolean isVerified;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orders = new ArrayList<>();
 
     @Transient
     private String avatar;
@@ -86,10 +90,115 @@ public class User {
             this.name = "user" + UUID.randomUUID().toString().substring(0, 8);
         }
     }
-  
+
     public User(long id) {
         this.id = id;
     }
 
+    public User() {
+    }
 
-    
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
+    public int getSoldOrderQty() {
+        return soldOrderQty;
+    }
+
+    public void setSoldOrderQty(int soldOrderQty) {
+        this.soldOrderQty = soldOrderQty;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public int getTotalReview() {
+        return totalReview;
+    }
+
+    public void setTotalReview(int totalReview) {
+        this.totalReview = totalReview;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+}

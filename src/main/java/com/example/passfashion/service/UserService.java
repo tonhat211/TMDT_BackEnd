@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ import com.example.passfashion.model.enums.Role;
 import com.example.passfashion.repository.UserRepository;
 import com.example.passfashion.security.JwtUtil;
 
+import jakarta.validation.Valid;
+
 @Service
 public class UserService {
     @Autowired
@@ -28,7 +31,7 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public UserResponse login(@RequestBody LoginRequest request) {
+    public UserResponse login(@Valid LoginRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Email không tồn tại"));
 
@@ -40,12 +43,12 @@ public class UserService {
         return response;
     }
 
-    public UserResponse register(@RequestBody RegisterRequest request) {
+    public UserResponse register(@Valid RegisterRequest request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new RuntimeException("Email đã tồn tại");
         }
         // if (!request.getPwd().equals(request.getConfirmPwd())) {
-        //     throw new RuntimeException("Mật khẩu xác nhận không khớp");
+        // throw new RuntimeException("Mật khẩu xác nhận không khớp");
         // }
         User user = new User();
         user.setEmail(request.getEmail());
@@ -54,6 +57,8 @@ public class UserService {
         user.setRole(Role.USER);
 
         User saved = userRepository.save(user);
+        UserResponse response = convertToUserResponse(saved);
+        response.setToken(jwtUtil.generateToken(saved)); // Trả về token
         return convertToUserResponse(saved);
     }
 
@@ -66,11 +71,21 @@ public class UserService {
     // 👉 Đây là method chuyển đổi User → UserResponse, viết nội bộ trong service
     private UserResponse convertToUserResponse(User user) {
         UserResponse response = new UserResponse();
+        response.setId(user.getId());
         response.setName(user.getName());
         response.setEmail(user.getEmail());
         response.setBirthday(user.getBirthday());
         response.setPhone(user.getPhone());
         response.setImageUrl(user.getImage() != null ? user.getImage().getUrl() : null);
         return response;
+    }
+
+    public User getCurrentUser() {
+        Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (userId == null) {
+            throw new IllegalStateException("Người dùng chưa được xác thực");
+        }
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng với id: " + userId));
     }
 }

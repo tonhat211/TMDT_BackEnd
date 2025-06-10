@@ -1,4 +1,4 @@
-package com.example.passfashion.dto;
+package com.example.passfashion.dto.Request;
 
 public class ProductRequest {
     private long categoryId;
@@ -10,6 +10,5 @@ public class ProductRequest {
     public void setCategoryId(long categoryId) {
         this.categoryId = categoryId;
     }
-
 
 }

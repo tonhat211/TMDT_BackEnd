@@ -10,12 +10,12 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name="title", nullable = false)
+    @Column(name = "title", nullable = false)
     private String title;
-    @Column(name="link", nullable = false, unique = true)
+    @Column(name = "link", nullable = false, unique = true)
     private String link;
-    @Column(name="is_deleted", columnDefinition = "INT DEFAULT 0")
-    private int isDeleted;
+    @Column(name = "is_deleted", columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean isDeleted;
 
     public String getLink() {
         return link;
@@ -41,18 +41,20 @@ public class Category {
         this.title = title;
     }
 
-    public int getIsDeleted() {
+    public boolean getIsDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(int isDeleted) {
+    public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Category category)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof Category category))
+            return false;
         return id == category.id;
     }
 

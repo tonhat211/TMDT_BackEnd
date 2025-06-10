@@ -1,26 +1,34 @@
 package com.example.passfashion.controller;
 
-import com.example.passfashion.dto.BasicProductResponse;
-import com.example.passfashion.dto.CommentResponse;
-import com.example.passfashion.dto.ProductDetailResponse;
+import com.example.passfashion.dto.Request.PostProductRequest;
+import com.example.passfashion.dto.Response.BasicProductResponse;
+import com.example.passfashion.dto.Response.CommentResponse;
+import com.example.passfashion.dto.Response.PostProductResponse;
+import com.example.passfashion.dto.Response.ProductDetailResponse;
 import com.example.passfashion.model.*;
 import com.example.passfashion.repository.CommentRepository;
 import com.example.passfashion.repository.ProductRepository;
+import com.example.passfashion.security.JwtUtil;
 import com.example.passfashion.service.CommentService;
 import com.example.passfashion.service.Constant;
 import com.example.passfashion.service.ProductService;
+
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/products")
@@ -36,6 +44,35 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @PostMapping("/create")
+    public ResponseEntity<PostProductResponse> createProduct(@RequestBody PostProductRequest request,
+            HttpServletRequest httpRequest) {
+        // Lấy token từ header Authorization
+        String authHeader = httpRequest.getHeader("Authorization");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new SecurityException("Token không hợp lệ hoặc thiếu");
+        }
+
+        String token = authHeader.substring(7);
+        System.out.println("Token: " + token);
+        Long authenticatedUserId = jwtUtil.getUserIdFromToken(token);
+        System.out.println("User ID từ token: " + authenticatedUserId);
+        System.out.println("User ID từ request: " + request.getUserId());
+        if (authenticatedUserId == null) {
+            throw new SecurityException("Không thể lấy userId từ token");
+        }
+
+        if (!authenticatedUserId.equals(request.getUserId())) {
+            throw new IllegalArgumentException("User ID không khớp với người dùng đã đăng nhập");
+        }
+
+        PostProductResponse response = productService.createProduct(request);
+        return ResponseEntity.ok(response);
+    }
 
     // localhost:8080/api/v1/product/tui-xach?sortBy=price&direction=asc&page=0&size=10
     @PostMapping("/{categoryCode}")
