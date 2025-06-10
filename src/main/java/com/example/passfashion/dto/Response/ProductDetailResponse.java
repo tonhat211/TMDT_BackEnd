@@ -29,7 +29,7 @@ public class ProductDetailResponse {
                 this.images.add(Constant.PRODUCT_IMG_DIR + "/" + image.getUrl().trim());
             }
         }
-        if (product.getIsSold() == 1)
+        if (product.getIsSold())
             this.isSold = true;
         else
             this.isSold = false;

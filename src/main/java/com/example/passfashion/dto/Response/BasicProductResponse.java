@@ -13,14 +13,17 @@ public class BasicProductResponse {
     private String thumbnail;
     private boolean isSold;
 
-    public BasicProductResponse(long id, String name, double price, List<Image> images, int isSold) {
+    public BasicProductResponse(long id, String name, double price, List<Image> images, boolean isSold) {
         this.id = id;
         this.name = name;
         this.price = price;
         if (images != null && !images.isEmpty()) {
-            this.thumbnail = Constant.PRODUCT_IMG_DIR+"/"+images.get(0).getUrl();
+            this.thumbnail = Constant.PRODUCT_IMG_DIR + "/" + images.get(0).getUrl();
         }
-        if(isSold==1) this.isSold = true; else this.isSold = false;
+        if (isSold)
+            this.isSold = true;
+        else
+            this.isSold = false;
     }
 
     public boolean isSold() {

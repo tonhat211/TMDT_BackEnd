@@ -36,6 +36,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Column(name = "name", nullable = true)
     private String name;
 
@@ -61,7 +62,7 @@ public class User {
     @Column(name = "sold_order_qty", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int soldOrderQty;
 
-    @Column(name="rating", nullable = false, columnDefinition = "DOUBLE DEFAULT 0")
+    @Column(name = "rating", nullable = false, columnDefinition = "DOUBLE DEFAULT 0")
     private double rating;
 
     @Column(name = "total_review", nullable = false, columnDefinition = "INT DEFAULT 0")
@@ -96,8 +97,7 @@ public class User {
 
     public User() {
     }
-
-
+  
     public long getId() {
         return id;
     }
