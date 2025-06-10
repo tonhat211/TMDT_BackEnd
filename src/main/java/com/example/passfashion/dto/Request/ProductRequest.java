@@ -10,5 +10,4 @@ public class ProductRequest {
     public void setCategoryId(long categoryId) {
         this.categoryId = categoryId;
     }
-
 }
