@@ -139,6 +139,35 @@ public class PostProductRequest {
         this.termsAccepted = termsAccepted;
     }
 
+    public boolean isSold() {
+        return this.isSold;
+    }
+
+    public void setSold(final boolean isSold) {
+        this.isSold = isSold;
+    }
+
+    public boolean isDeleted() {
+        return this.isDeleted;
+    }
+
+    public void setDeleted(final boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public void setCreatedAt(final LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public PostProductRequest() {
     }
+
+    public String getCategoryTitle() {
+        return categoryTitle;
+    }
+
 }

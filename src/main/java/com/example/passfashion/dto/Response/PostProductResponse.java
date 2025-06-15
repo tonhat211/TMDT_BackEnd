@@ -171,4 +171,11 @@ public class PostProductResponse {
         this.pickupAddress = pickupAddress;
     }
 
+    public void setTermsAccepted(final boolean termsAccepted) {
+        this.termsAccepted = termsAccepted;
+    }
+
+    public boolean isTermsAccepted() {
+        return termsAccepted;
+    }
 }
