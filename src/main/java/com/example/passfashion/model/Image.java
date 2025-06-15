@@ -44,4 +44,12 @@ public class Image {
     public void setAlt(String alt) {
         this.alt = alt;
     }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 }

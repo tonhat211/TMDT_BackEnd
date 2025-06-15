@@ -1,14 +1,9 @@
 package com.example.passfashion.service;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.passfashion.dto.Request.LoginRequest;
 import com.example.passfashion.dto.Request.RegisterRequest;
@@ -35,7 +30,8 @@ public class UserService {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Email không tồn tại"));
 
-        if (!passwordEncoder.matches(request.getPwd(), user.getPwd())) {
+        if (passwordEncoder.matches(request.getPwd(), user.getPwd())) {
+            // sysout pass coder
             throw new RuntimeException("Mật khẩu không đúng");
         }
         UserResponse response = convertToUserResponse(user);

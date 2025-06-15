@@ -56,9 +56,10 @@ public class UserController {
     }
 
     // @PostMapping("/forgot-password")
-    // public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordRequest request) {
-    //     userService.sendPasswordResetEmail(request.getEmail());
-    //     return ResponseEntity.ok("Email reset mật khẩu đã được gửi");
+    // public ResponseEntity<String> forgotPassword(@RequestBody
+    // ForgotPasswordRequest request) {
+    // userService.sendPasswordResetEmail(request.getEmail());
+    // return ResponseEntity.ok("Email reset mật khẩu đã được gửi");
     // }
 
     @PutMapping("/{id}")

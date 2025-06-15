@@ -25,6 +25,14 @@ public class UserResponse {
     String token;
 
     // getter and setter
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -72,4 +80,5 @@ public class UserResponse {
     public void setToken(String token) {
         this.token = token;
     }
+
 }
