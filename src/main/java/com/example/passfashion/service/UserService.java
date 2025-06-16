@@ -43,9 +43,7 @@ public class UserService {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new RuntimeException("Email đã tồn tại");
         }
-        // if (!request.getPwd().equals(request.getConfirmPwd())) {
-        // throw new RuntimeException("Mật khẩu xác nhận không khớp");
-        // }
+
         User user = new User();
         user.setEmail(request.getEmail());
         user.setPwd(passwordEncoder.encode(request.getPwd()));
