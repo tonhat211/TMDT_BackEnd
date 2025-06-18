@@ -30,7 +30,7 @@ public class UserService {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Email không tồn tại"));
 
-        if (passwordEncoder.matches(request.getPwd(), user.getPwd())) {
+        if (!passwordEncoder.matches(request.getPwd(), user.getPwd())) {
             // sysout pass coder
             throw new RuntimeException("Mật khẩu không đúng");
         }
