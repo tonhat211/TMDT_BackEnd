@@ -7,17 +7,31 @@
 -- Phiên bản máy phục vụ: 10.4.28-MariaDB
 -- Phiên bản PHP: 8.2.4
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+-- REMOVED: 'show tables' command (must come AFTER database/table creation)
+-- MOVED: All SET commands to the top
+-- ADDED: Semicolons for all statements
 
+-- 1. Set SQL mode FIRST (critical)
+SET SQL_MODE = 'NO_AUTO_VALUE_ON_ZERO';
+SET time_zone = '+00:00';
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-CREATE DATABASE IF NOT EXISTS `passfashion_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+-- 2. Character set configuration
+SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT;
+SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS;
+SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION;
+SET NAMES utf8mb4;
+
+-- 3. Database creation (must come AFTER character sets)
+CREATE DATABASE IF NOT EXISTS `passfashion_db`
+  DEFAULT CHARACTER SET utf8mb4
+  COLLATE utf8mb4_general_ci;
+
+-- 4. Select the database
 USE `passfashion_db`;
+
+
+-- 6. Start transaction for table operations
+START TRANSACTION;
 --
 -- Cơ sở dữ liệu: `passfashion_db`
 --
@@ -45,7 +59,6 @@ CREATE TABLE `addresses` (
 --
 -- Cấu trúc bảng cho bảng `categories`
 --
-
 CREATE TABLE `categories` (
   `id` bigint(20) NOT NULL,
   `is_deleted` int(11) DEFAULT 0,
@@ -83,7 +96,6 @@ CREATE TABLE `comments` (
 --
 -- Đang đổ dữ liệu cho bảng `comments`
 --
-
 INSERT INTO `comments` (`id`, `content`, `created_at`, `is_deleted`, `level`, `product_id`, `user_id`, `parent_id`) VALUES
 (1, 'Hàng còn không', '2025-05-01 11:45:07', 0, 0, 2, 2, NULL),
 (2, 'Còn bạn ơi', '2025-05-23 11:45:31', 0, 1, 2, 1, 1),
@@ -97,7 +109,7 @@ INSERT INTO `comments` (`id`, `content`, `created_at`, `is_deleted`, `level`, `p
 --
 -- Cấu trúc bảng cho bảng `employees`
 --
-
+users
 CREATE TABLE `employees` (
   `department` varchar(255) NOT NULL,
   `position` varchar(255) NOT NULL,
@@ -140,7 +152,6 @@ CREATE TABLE `image_products` (
 --
 -- Đang đổ dữ liệu cho bảng `image_products`
 --
-
 INSERT INTO `image_products` (`product_id`, `image_id`) VALUES
 (2, 1),
 (2, 3),
@@ -151,13 +162,10 @@ INSERT INTO `image_products` (`product_id`, `image_id`) VALUES
 --
 -- Cấu trúc bảng cho bảng `permissions`
 --
-
 CREATE TABLE `permissions` (
   `id` bigint(20) NOT NULL,
   `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
 
 --
 -- Cấu trúc bảng cho bảng `products`
@@ -180,53 +188,52 @@ CREATE TABLE `products` (
 
 --
 -- Đang đổ dữ liệu cho bảng `products`
---
-
-INSERT INTO `products` (`id`, `name`, `created_at`, `description`, `is_deleted`, `is_sold`, `price`, `category_id`, `image_id`, `user_id`, `thumbnail`, `qty`) VALUES
-(1, 'Quần jean da bò Crocodie', '2025-05-14 21:18:15', 'Đẹp', 0, 0, 100000, 1, 1, 1, NULL, 1),
-(2, 'Ao thun mau den', '2025-05-14 21:33:02', 'Đẹp', 0, 0, 200000, 1, 1, 1, NULL, 1),
-(3, 'Túi channel', '2025-05-14 21:33:02', 'Đẹp', 0, 0, 1000000, 3, 1, 1, NULL, 1),
-(4, 'Ví vans', '2025-05-14 21:33:02', 'Đẹp', 0, 0, 150000, 3, 1, 1, NULL, 1),
-(5, 'Đồng hồ timex', '2025-05-14 21:33:02', 'Đẹp', 0, 0, 15000000, 4, 1, 1, NULL, 1),
-(6, 'Giày adidas size 39', '2025-05-14 21:33:02', 'Đẹp', 0, 0, 600000, 2, 1, 1, NULL, 1),
-(7, 'Dép nike size 27', '2025-05-14 21:33:02', 'Đẹp', 0, 0, 99000, 2, 1, 1, NULL, 1),
-(8, 'Quần đùi', '2025-05-14 21:33:02', 'Đẹp', 0, 0, 100000, 1, 1, 1, NULL, 1),
-(9, 'Áo dài', '2025-05-14 21:33:02', 'Đẹp', 0, 0, 200000, 1, 1, 1, NULL, 1),
-(10, 'Áo khoác tuyển đức', '2025-05-14 21:33:02', 'Đẹp', 0, 0, 100000, 1, 1, 1, NULL, 1),
-(11, 'Quan ao test', '2025-05-22 15:43:48', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(12, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(13, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(14, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(15, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(16, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(17, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(18, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(19, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(20, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(21, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(22, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(23, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(24, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(25, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(26, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(27, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(28, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(29, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(30, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(31, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(32, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(33, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(34, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(35, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(36, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(37, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(38, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(39, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(40, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(41, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(42, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(43, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1),
-(44, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1, 1);
+-- id, name, price, category, user, qty, description, image_id, 
+INSERT INTO `products` (`id`, `name`, `created_at`, `description`, `is_deleted`, `is_sold`, `price`, `category_id`, `image_id`, `user_id`, `qty`) VALUES
+(1, 'Quần jean da bò Crocodie', '2025-05-14 21:18:15', 'Đẹp', 0, 0, 100000, 1, 1, 1, 1),
+(2, 'Ao thun mau den', '2025-05-14 21:33:02', 'Đẹp', 0, 0, 200000, 1, 1, 1, 1),
+(3, 'Túi channel', '2025-05-14 21:33:02', 'Đẹp', 0, 0, 1000000, 3, 1, 1, 1),
+(4, 'Ví vans', '2025-05-14 21:33:02', 'Đẹp', 0, 0, 150000, 3, 1, 1, 1),
+(5, 'Đồng hồ timex', '2025-05-14 21:33:02', 'Đẹp', 0, 0, 15000000, 4, 1, 1, 1),
+(6, 'Giày adidas size 39', '2025-05-14 21:33:02', 'Đẹp', 0, 0, 600000, 2, 1, 1, 1),
+(7, 'Dép nike size 27', '2025-05-14 21:33:02', 'Đẹp', 0, 0, 99000, 2, 1, 1, 1),
+(8, 'Quần đùi', '2025-05-14 21:33:02', 'Đẹp', 0, 0, 100000, 1, 1, 1, 1),
+(9, 'Áo dài', '2025-05-14 21:33:02', 'Đẹp', 0, 0, 200000, 1, 1, 1, 1),
+(10, 'Áo khoác tuyển đức', '2025-05-14 21:33:02', 'Đẹp', 0, 0, 100000, 1, 1, 1, 1),
+(11, 'Quan ao test', '2025-05-22 15:43:48', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(12, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(13, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(14, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(15, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(16, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(17, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(18, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(19, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(20, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(21, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(22, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(23, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(24, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(25, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(26, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(27, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(28, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(29, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(30, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(31, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(32, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(33, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(34, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(35, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(36, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(37, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(38, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(39, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(40, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(41, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(42, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(43, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1),
+(44, 'Quan ao test', '2025-05-22 15:44:18', 'DDejp', 0, 0, 0, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -251,7 +258,6 @@ CREATE TABLE `users` (
 --
 -- Đang đổ dữ liệu cho bảng `users`
 --
-
 INSERT INTO `users` (`id`, `birthday`, `email`, `is_deleted`, `name`, `pwd`, `saled_order_qty`, `rating`, `sold_order_qty`, `total_review`, `image_id`) VALUES
 (1, NULL, 'tonhat@gmail.com', 0, 'To Nhat', '1234', 0, 0, 0, 0, 4),
 (2, NULL, 'tri@gmail.com', 0, 'Tri', '1234', 0, 0, 0, 0, 4),
@@ -267,11 +273,6 @@ CREATE TABLE `user_permissions` (
   `user_id` bigint(20) NOT NULL,
   `permission_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
----
---- Cấu trúc bảng Wishlist gồm userID và productID .
----
-
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -453,3 +454,10 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+-- 7. Commit transaction and restore settings
+COMMIT;
+
+SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT;
+SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS;
+SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION;

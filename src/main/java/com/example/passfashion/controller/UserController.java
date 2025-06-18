@@ -47,7 +47,10 @@ public class UserController {
 
     @PostMapping("/register")
     public UserResponse register(@Valid @RequestBody RegisterRequest request) {
+        System.out.println(
+                "Register request: " + request.getEmail() + ", " + request.getPwd() + ", " + request.getPhone());
         return userService.register(request);
+        // return null;
     }
 
     @GetMapping("/{id}")
