@@ -3,19 +3,31 @@ package com.example.passfashion.dto.Request;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PostProductRequest {
-    private long id;
+    @NotBlank(message = "Tên sản phẩm không được rỗng")
     private String name;
+    @Positive(message = "Giá sản phẩm phải lớn hơn 0")
     private double price;
     private double salePrice;
-    private long categoryId;
+    @NotBlank(message = "Tên danh mục không được trống")
     private String categoryTitle;
+    @Positive(message = "Người dùng không hợp lệ")
     private long userId;
+    @Min(value = 1, message = "Số lượng tối thiểu là 1")
     private int qty;
     private String description;
+    @Size(max = 5, message = "Tối đa 5 ảnh cho mỗi sản phẩm")
     private List<String> imageUrls; // Tối đa 5 URL
     private String material;
     private boolean negotiable;
@@ -23,9 +35,6 @@ public class PostProductRequest {
     private String condition;
     private String pickupAddress;
     private boolean termsAccepted;
-    private boolean isSold;
-    private boolean isDeleted;
-    private LocalDateTime createdAt;
 
     public String getName() {
         return this.name;
@@ -37,10 +46,6 @@ public class PostProductRequest {
 
     public double getSalePrice() {
         return this.salePrice;
-    }
-
-    public long getCategoryId() {
-        return this.categoryId;
     }
 
     public long getUserId() {
@@ -95,10 +100,6 @@ public class PostProductRequest {
         this.salePrice = salePrice;
     }
 
-    public void setCategoryId(final long categoryId) {
-        this.categoryId = categoryId;
-    }
-
     public void setUserId(final long userId) {
         this.userId = userId;
     }
@@ -139,6 +140,8 @@ public class PostProductRequest {
         this.termsAccepted = termsAccepted;
     }
 
-    public PostProductRequest() {
+    public String getCategoryTitle() {
+        return categoryTitle;
     }
+
 }

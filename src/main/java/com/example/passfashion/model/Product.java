@@ -1,6 +1,5 @@
 package com.example.passfashion.model;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +13,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
@@ -74,10 +71,10 @@ public class Product {
     private String material;
 
     @Column(name = "salePrice", nullable = true)
-    private double salePrice;
+    private Double salePrice;
 
     @Column(name = "negotiable", nullable = true)
-    private boolean negotiable;
+    private Boolean negotiable;
 
     @Column(name = "brand", nullable = true)
     private String brand;
@@ -89,7 +86,7 @@ public class Product {
     private String pickupAddress; // Chỉ có tên thành phố thôi
 
     @Column(name = "termsAccepted", nullable = true)
-    private boolean termsAccepted;
+    private Boolean termsAccepted;
 
     @PrePersist
     @PreUpdate
@@ -214,4 +211,61 @@ public class Product {
     public void setIsSold(boolean isSold) {
         this.isSold = isSold;
     }
+
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+
+    public double getSalePrice() {
+        return salePrice;
+    }
+
+    public void setSalePrice(double salePrice) {
+        this.salePrice = salePrice;
+    }
+
+    public boolean isNegotiable() {
+        return negotiable;
+    }
+
+    public void setNegotiable(boolean negotiable) {
+        this.negotiable = negotiable;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
+
+    public String getPickupAddress() {
+        return pickupAddress;
+    }
+
+    public void setPickupAddress(String pickupAddress) {
+        this.pickupAddress = pickupAddress;
+    }
+
+    public boolean isTermsAccepted() {
+        return termsAccepted;
+    }
+
+    public void setTermsAccepted(boolean termsAccepted) {
+        this.termsAccepted = termsAccepted;
+    }
+
 }

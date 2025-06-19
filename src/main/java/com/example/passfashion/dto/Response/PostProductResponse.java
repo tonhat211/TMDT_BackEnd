@@ -3,9 +3,13 @@ package com.example.passfashion.dto.Response;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class PostProductResponse {
     private long id;
     private String name;
@@ -171,4 +175,11 @@ public class PostProductResponse {
         this.pickupAddress = pickupAddress;
     }
 
+    public void setTermsAccepted(final boolean termsAccepted) {
+        this.termsAccepted = termsAccepted;
+    }
+
+    public boolean isTermsAccepted() {
+        return termsAccepted;
+    }
 }

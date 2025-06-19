@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class ErrorResponse {
     private String message;
@@ -48,4 +47,18 @@ public class ErrorResponse {
     public void setDetails(final Map<String, String> details) {
         this.details = details;
     }
+
+    /**
+     * @param message
+     * @param status
+     * @param timestamp
+     * @param details
+     */
+    public ErrorResponse(String message, int status, String timestamp, Map<String, String> details) {
+        this.message = message;
+        this.status = status;
+        this.timestamp = timestamp;
+        this.details = details;
+    }
+
 }
