@@ -32,9 +32,9 @@ public class CreditCardController {
 
 
     @GetMapping("/all/{userid}")
-    public CreditCardResponse getCardsByUserId(@PathVariable long userid) throws Exception {
-        CreditCard creditCard = creditCardRepository.findAllByUserId((userid));
-        return new CreditCardResponse(creditCard.getId(),creditCard.getNumber(),creditCard.getOwnerName(),creditCard.getExpiryDate());
+    public List<CreditCardResponse> getCardsByUserId(@PathVariable long userid) throws Exception {
+        List<CreditCardResponse> list = creditCardRepository.findAllByUserId((userid));
+        return list;
     }
 
     @PutMapping("/update/{id}")
