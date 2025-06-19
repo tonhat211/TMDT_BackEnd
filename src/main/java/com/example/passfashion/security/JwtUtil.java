@@ -3,6 +3,7 @@ package com.example.passfashion.security;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.example.passfashion.model.User;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -21,18 +23,30 @@ public class JwtUtil {
     public String generateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", user.getRole().name());
-
+        // claims.put("sub", String.valueOf(user.getId()));
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(user.getEmail())
+                .setSubject(String.valueOf(user.getId()))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10h
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }
 
-    public String extractUsername(String token) {
-        return extractClaims(token).getSubject();
+    public Long getUserIdFromToken(String token) {
+        try {
+            String userIdStr = extractClaims(token).getSubject(); // Lấy userId từ sub
+            return Long.valueOf(userIdStr);
+        } catch (JwtException | NumberFormatException e) {
+            throw new IllegalArgumentException(
+                    "Token không hợp lệ hoặc userId không đúng định dạng: " + e.getMessage());
+        }
+    }
+
+    // Lấy claim từ token
+    public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = extractClaims(token);
+        return claimsResolver.apply(claims);
     }
 
     public Claims extractClaims(String token) {
@@ -40,8 +54,8 @@ public class JwtUtil {
     }
 
     public boolean isTokenValid(String token, User user) {
-        final String username = extractUsername(token);
-        return (username.equals(user.getEmail())) && !isTokenExpired(token);
+        Long tokenUserId = getUserIdFromToken(token);
+        return tokenUserId.equals(user.getId()) && !isTokenExpired(token);
     }
 
     private boolean isTokenExpired(String token) {

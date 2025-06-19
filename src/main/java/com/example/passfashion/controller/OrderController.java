@@ -22,9 +22,6 @@ public class OrderController {
   @PostMapping()
   public ResponseEntity<String> createOrder(@RequestBody OrderRequest orderRequest) {
 
-    // Thực hiện lưu vào DB nếu cần
-    // System.out.println("Received order request: " + orderRequest.toString());
-
     try {
 
       Optional<Order> check = orderService.createOrder(orderRequest);
@@ -38,14 +35,6 @@ public class OrderController {
       return ResponseEntity.status(500).body("Failed to create order: " + e.getMessage());
     }
 
-    // Kiểm tra xem đơn hàng đã được tạo thành công hay chưa
-    // Uncomment the following lines if you want to return a response based on the
-    // order creation status
-
-    // if (check.isEmpty()) {
-    // return ResponseEntity.ok("Failed to create order");
-    // }
     return ResponseEntity.ok("Order creation process initiated");
-    // return ResponseEntity.ok("Order created successfully");
   }
 }

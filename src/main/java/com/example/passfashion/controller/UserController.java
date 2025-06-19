@@ -47,7 +47,10 @@ public class UserController {
 
     @PostMapping("/register")
     public UserResponse register(@Valid @RequestBody RegisterRequest request) {
+        System.out.println(
+                "Register request: " + request.getEmail() + ", " + request.getPwd() + ", " + request.getPhone());
         return userService.register(request);
+        // return null;
     }
 
     @GetMapping("/{id}")
@@ -56,9 +59,10 @@ public class UserController {
     }
 
     // @PostMapping("/forgot-password")
-    // public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordRequest request) {
-    //     userService.sendPasswordResetEmail(request.getEmail());
-    //     return ResponseEntity.ok("Email reset mật khẩu đã được gửi");
+    // public ResponseEntity<String> forgotPassword(@RequestBody
+    // ForgotPasswordRequest request) {
+    // userService.sendPasswordResetEmail(request.getEmail());
+    // return ResponseEntity.ok("Email reset mật khẩu đã được gửi");
     // }
 
     @PutMapping("/{id}")

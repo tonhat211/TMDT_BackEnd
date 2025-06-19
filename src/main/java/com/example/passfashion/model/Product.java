@@ -13,15 +13,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "products")
 public class Product {
     @Id
@@ -45,27 +45,48 @@ public class Product {
     @Column(name = "qty", columnDefinition = "INT DEFAULT 1")
     private int qty;
 
-    @Column(name = "description", columnDefinition = "JSON")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @ManyToMany
-    @JoinTable(name = "image_products", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "image_id"))
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> images = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
-    @Column(name = "is_sold", nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int isSold;
+    @Column(name = "is_sold", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean isSold;
 
-    @Column(name = "is_deleted", nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int isDeleted;
+    @Column(name = "is_deleted", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean isDeleted;
 
     @Column(name = "created_at", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP", nullable = false, updatable = false, insertable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "unsigned_name", nullable = true)
     private String unsignedName;
+
+    // Post Product
+    @Column(name = "material", nullable = true)
+    private String material;
+
+    @Column(name = "salePrice", nullable = true)
+    private Double salePrice;
+
+    @Column(name = "negotiable", nullable = true)
+    private Boolean negotiable;
+
+    @Column(name = "brand", nullable = true)
+    private String brand;
+
+    @Column(name = "`condition`", nullable = true) // Thoát từ khóa condition
+    private String condition;
+
+    @Column(name = "pickupAddress", nullable = true)
+    private String pickupAddress; // Chỉ có tên thành phố thôi
+
+    @Column(name = "termsAccepted", nullable = true)
+    private Boolean termsAccepted;
 
     @PrePersist
     @PreUpdate
@@ -175,19 +196,76 @@ public class Product {
         this.description = description;
     }
 
-    public int getIsDeleted() {
+    public boolean getIsDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(int isDeleted) {
+    public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
 
-    public int getIsSold() {
+    public boolean getIsSold() {
         return isSold;
     }
 
-    public void setIsSold(int isSold) {
+    public void setIsSold(boolean isSold) {
         this.isSold = isSold;
     }
+
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+
+    public double getSalePrice() {
+        return salePrice;
+    }
+
+    public void setSalePrice(double salePrice) {
+        this.salePrice = salePrice;
+    }
+
+    public boolean isNegotiable() {
+        return negotiable;
+    }
+
+    public void setNegotiable(boolean negotiable) {
+        this.negotiable = negotiable;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
+
+    public String getPickupAddress() {
+        return pickupAddress;
+    }
+
+    public void setPickupAddress(String pickupAddress) {
+        this.pickupAddress = pickupAddress;
+    }
+
+    public boolean isTermsAccepted() {
+        return termsAccepted;
+    }
+
+    public void setTermsAccepted(boolean termsAccepted) {
+        this.termsAccepted = termsAccepted;
+    }
+
 }
