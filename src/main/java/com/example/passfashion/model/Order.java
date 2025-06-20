@@ -28,7 +28,7 @@ public class Order {
   private String email;
   private String phone;
   private Double total;
-
+  private String status;
   // Map đến User
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -124,4 +124,11 @@ public class Order {
     this.voucherOrder = voucherOrder;
   }
 
+  public String getStatus() {
+    return status;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
+  }
 }

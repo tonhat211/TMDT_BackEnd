@@ -17,12 +17,22 @@ public class CreditCardResponse {
     private String number;
     private String ownerName;
     private Date expiryDate;
+    private String ccv;
 
-    public CreditCardResponse(Long id, String number, String ownerName, Date expiryDate) {
+    public CreditCardResponse(Long id, String number, String ownerName, Date expiryDate, String ccv) {
         this.id = id;
         this.number = number;
         this.ownerName = ownerName;
         this.expiryDate = expiryDate;
+        this.ccv = ccv;
+    }
+
+    public String getCcv() {
+        return ccv;
+    }
+
+    public void setCcv(String ccv) {
+        this.ccv = ccv;
     }
 
     public Long getId() {
