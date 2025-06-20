@@ -37,4 +37,18 @@ public class WishlistService {
     return wishlistRepo.addProductToWishlist(userId, productId);
 
   }
+
+  /**
+   * delete product from wishlist
+   * 
+   * @param userId    the ID of the user
+   * @param productId the ID of the product to delete
+   * @return an optional message indicating success or failure
+   * 
+   */
+  public int deleteProductFromWishlist(Long userId, Long productId) {
+    // Call the repository method to delete a product from the wishlist
+    return wishlistRepo.deleteByUserIdAndProductId(userId, productId);
+
+  }
 }
