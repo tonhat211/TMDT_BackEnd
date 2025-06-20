@@ -44,19 +44,6 @@ public class ProductService {
 
     @Transactional
     public PostProductResponse createProduct(PostProductRequest request) {
-        // Kiểm tra dữ liệu đầu vào
-        if (request.getName() == null || request.getName().trim().isEmpty()) {
-            throw new IllegalArgumentException("Tên sản phẩm không được rỗng");
-        }
-        if (request.getPrice() <= 0) {
-            throw new IllegalArgumentException("Giá sản phẩm phải lớn hơn 0");
-        }
-        if (request.getImageUrls() != null && request.getImageUrls().size() > 5) {
-            throw new IllegalArgumentException("Tối đa 5 ảnh cho mỗi sản phẩm");
-        }
-        if (!categoryRepository.existsByIdAndIsDeleted(request.getCategoryId(), false)) {
-            throw new IllegalArgumentException("Danh mục không tồn tại hoặc đã bị xóa");
-        }
         if (!userRepository.existsByIdAndIsDeleted(request.getUserId(), false)) {
             throw new IllegalArgumentException("Người dùng không tồn tại hoặc đã bị xóa");
         }
@@ -196,5 +183,12 @@ public class ProductService {
 
     private String generateCategoryLink(String title) {
         return title.toLowerCase().replaceAll("[^a-z0-9]", "-");
+    }
+
+    public void deleteProductById(Long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm với ID: " + productId));
+
+        productRepository.delete(product); // Tự động xoá images vì cascade
     }
 }
