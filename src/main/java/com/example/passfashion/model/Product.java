@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.example.passfashion.utils.VietnameseUtils;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -40,6 +41,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     @Column(name = "qty", columnDefinition = "INT DEFAULT 1")

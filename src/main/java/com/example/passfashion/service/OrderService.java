@@ -48,7 +48,7 @@ public class OrderService {
     order.setEmail(request.getEmail());
     order.setPhone(request.getPhone());
     order.setTotal(request.getTotal());
-
+    order.setStatus("PENDING");
     order.setAddressOrder(address);
     order.setCardOrder(card);
     order.setProductOrder(product);
@@ -72,7 +72,7 @@ public class OrderService {
   public List<Order> ordersUserBought(long userId) {
     User user = userRepository.findById(userId)
             .orElseThrow(() -> new RuntimeException("User not found"));
-    return orderRepository.findAllByUser(user);
+    return orderRepository.findAllByUserId(userId);
   }
 
   public List<SpendingDataPoint> getSpendingData(long userId) {
