@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.passfashion.model.Order;
+import com.example.passfashion.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,6 +42,8 @@ public class UserController {
     // Xử lý Đăng nhập, đăng xuất
     @Autowired
     private UserService userService;
+    @Autowired
+    private OrderService orderService;
 
     @PostMapping("/login")
     public UserResponse login(@Valid @RequestBody LoginRequest request) {
@@ -114,5 +119,15 @@ public class UserController {
     @GetMapping("/me")
     public User getCurrentUser() {
         return userService.getCurrentUser();
+    }
+
+    @GetMapping("/spending/{userId}")
+    public ResponseEntity<?> getSpendingData(@PathVariable long userId) {
+        try {
+            return ResponseEntity.ok(orderService.getSpendingData(userId));
+        } catch (Exception e) {
+            System.err.println("Error fetching data: " + e.getMessage());
+            return ResponseEntity.status(500).body("Failed to fetch data: " + e.getMessage());
+        }
     }
 }

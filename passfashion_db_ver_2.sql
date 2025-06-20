@@ -109,7 +109,6 @@ INSERT INTO `comments` (`id`, `content`, `created_at`, `is_deleted`, `level`, `p
 --
 -- Cấu trúc bảng cho bảng `employees`
 --
-users
 CREATE TABLE `employees` (
   `department` varchar(255) NOT NULL,
   `position` varchar(255) NOT NULL,
