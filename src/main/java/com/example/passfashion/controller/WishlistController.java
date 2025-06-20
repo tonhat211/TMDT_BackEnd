@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,4 +54,19 @@ public class WishlistController {
     }
   }
 
+  // delete /api/v1/wishlists/{userId}/remove/{productId}
+  @DeleteMapping("/{userId}/remove/{productId}")
+  public ResponseEntity<String> removeProductFromWishlist(
+      @PathVariable Long userId,
+      @PathVariable Long productId) {
+
+    int result = wishlistService.deleteProductFromWishlist(userId, productId);
+
+    System.out.println("result: " + result);
+    if (result > 0) {
+      return ResponseEntity.ok("Product removed from wishlist successfully");
+    } else {
+      return ResponseEntity.badRequest().body("Failed to remove product from wishlist");
+    }
+  }
 }
