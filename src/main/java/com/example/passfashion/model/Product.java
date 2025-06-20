@@ -267,5 +267,4 @@ public class Product {
     public void setTermsAccepted(boolean termsAccepted) {
         this.termsAccepted = termsAccepted;
     }
-
 }

@@ -37,7 +37,7 @@ public class UploadController {
 
             Files.write(filePath, file.getBytes()); // Ghi file
 
-            return ResponseEntity.ok("/uploads/" + fileName);
+            return ResponseEntity.ok("uploads/" + fileName);
         } catch (IOException e) {
             return ResponseEntity.status(500).body("Lỗi khi lưu file: " + e.getMessage());
         }

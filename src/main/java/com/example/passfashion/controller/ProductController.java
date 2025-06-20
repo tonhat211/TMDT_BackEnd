@@ -14,6 +14,7 @@ import com.example.passfashion.service.Constant;
 import com.example.passfashion.service.ProductService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -21,6 +22,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -49,7 +51,7 @@ public class ProductController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/create")
-    public ResponseEntity<PostProductResponse> createProduct(@RequestBody PostProductRequest request,
+    public ResponseEntity<PostProductResponse> createProduct(@Valid @RequestBody PostProductRequest request,
             HttpServletRequest httpRequest) {
         // Lấy token từ header Authorization
         String authHeader = httpRequest.getHeader("Authorization");
@@ -66,9 +68,11 @@ public class ProductController {
             throw new SecurityException("Không thể lấy userId từ token");
         }
 
-        if (!authenticatedUserId.equals(request.getUserId())) {
-            throw new IllegalArgumentException("User ID không khớp với người dùng đã đăng nhập");
-        }
+        // if (!authenticatedUserId.equals(request.getUserId())) {
+        // throw new IllegalArgumentException("User ID không khớp với người dùng đã đăng
+        // nhập");
+        // }
+        request.setUserId(authenticatedUserId);
 
         PostProductResponse response = productService.createProduct(request);
         return ResponseEntity.ok(response);
@@ -158,4 +162,13 @@ public class ProductController {
         return ResponseEntity.ok(result);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
+        try {
+            productService.deleteProductById(id);
+            return ResponseEntity.ok("Xoá sản phẩm thành công");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 }

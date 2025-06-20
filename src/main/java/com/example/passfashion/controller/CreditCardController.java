@@ -30,7 +30,6 @@ public class CreditCardController {
     @Autowired
     private UserRepository userRepository;
 
-
     @GetMapping("/all/{userid}")
     public List<CreditCardResponse> getCardsByUserId(@PathVariable long userid) throws Exception {
         List<CreditCardResponse> list = creditCardRepository.findAllByUserId((userid));
@@ -63,7 +62,7 @@ public class CreditCardController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public boolean updateUserAddress(@PathVariable long id) {
+    public boolean deleteCard(@PathVariable long id) {
         creditCardRepository.deleteById(id);
         return true;
     }

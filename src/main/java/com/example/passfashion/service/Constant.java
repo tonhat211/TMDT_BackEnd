@@ -18,6 +18,4 @@ public class Constant {
     }
 
     public static final String ADMIN_GRANT = "ADMIN";
-
-
 }

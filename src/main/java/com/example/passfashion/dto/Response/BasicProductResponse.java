@@ -18,7 +18,7 @@ public class BasicProductResponse {
         this.name = name;
         this.price = price;
         if (images != null && !images.isEmpty()) {
-            this.thumbnail = Constant.PRODUCT_IMG_DIR + "/" + images.get(0).getUrl();
+            this.thumbnail = images.get(0).getUrl();
         }
         if (isSold)
             this.isSold = true;
