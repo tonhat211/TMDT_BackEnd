@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.example.passfashion.dto.Request.OrderUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -95,6 +96,20 @@ public class OrderService {
 
     return data;
   }
+
+  public void updateStatus(long orderId, OrderUpdateRequest request) {
+    Order order = orderRepository.findById(orderId)
+            .orElseThrow(() -> new RuntimeException("Order not found"));
+    if(request.getStatus()!=null){
+      order.setStatus(request.getStatus());
+    } else if (request.getEmail() != null) {
+      order.setEmail(request.getEmail());
+    } else if (request.getPhone() != null) {
+      order.setPhone(request.getPhone());
+    }
+    orderRepository.save(order);
+  }
+
 
 
   public record SpendingDataPoint(String label, double value) {

@@ -3,6 +3,7 @@ package com.example.passfashion.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.passfashion.dto.Request.OrderUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,6 +57,16 @@ public class OrderController {
     }
   }
 
+  @PutMapping("/update-status/{orderId}")
+  public ResponseEntity<?> updateStatus(@PathVariable long orderId, @RequestBody OrderUpdateRequest request) {
+    try {
+      orderService.updateStatus(orderId, request); // Không trả về gì
+      return ResponseEntity.ok("Cập nhật trạng thái thành công");
+    } catch (Exception e) {
+      System.err.println("Error update orders: " + e.getMessage());
+      return ResponseEntity.status(500).body("Cập nhật thất bại: " + e.getMessage());
+    }
+  }
 
 
 }
