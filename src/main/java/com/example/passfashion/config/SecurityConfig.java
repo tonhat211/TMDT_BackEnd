@@ -43,6 +43,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/credit_card/**").permitAll()
                         .requestMatchers("/api/v1/users/**").permitAll()
                         .requestMatchers("/api/v1/orders/**").permitAll()
+                        .requestMatchers("/api/v1/vouchers/**").permitAll()
                         .requestMatchers("/uploads/**").permitAll() // Cho phép truy cập file đã upload
                         .requestMatchers("/images/**", "/css/**", "/js/**").permitAll()
                         .anyRequest().authenticated())
