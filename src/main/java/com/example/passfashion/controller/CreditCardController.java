@@ -31,15 +31,13 @@ public class CreditCardController {
     private UserRepository userRepository;
 
     @GetMapping("/all/{userid}")
-    public CreditCardResponse getCardsByUserId(@PathVariable long userid) throws Exception {
-        CreditCard creditCard = creditCardRepository.findAllByUserId((userid));
-        return new CreditCardResponse(creditCard.getId(), creditCard.getNumber(), creditCard.getOwnerName(),
-                creditCard.getExpiryDate());
+    public List<CreditCardResponse> getCardsByUserId(@PathVariable long userid) throws Exception {
+        List<CreditCardResponse> list = creditCardRepository.findAllByUserId((userid));
+        return list;
     }
 
     @PutMapping("/update/{id}")
-    public boolean updateCardById(@PathVariable long id, @Valid @RequestBody CreditCardRequest request)
-            throws Exception {
+    public boolean updateCardById(@PathVariable long id, @Valid @RequestBody CreditCardRequest request) throws Exception {
         CreditCard creditCard = creditCardRepository.findById(id).orElseThrow(Exception::new);
         creditCard.setNumber(request.getNumber());
         creditCard.setOwnerName(request.getOwnerName());
@@ -50,7 +48,7 @@ public class CreditCardController {
     }
 
     @PostMapping("/add-card")
-    public boolean addCreditCard(@Valid @RequestBody CreditCardRequest request) {
+    public boolean addCreditCard(@Valid@RequestBody CreditCardRequest request) {
         CreditCard creditCard = new CreditCard();
         User user = userRepository.findById(request.getUserId()).orElseThrow();
         creditCard.setUser(user);
@@ -64,7 +62,7 @@ public class CreditCardController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public boolean updateUserAddress(@PathVariable long id) {
+    public boolean deleteCard(@PathVariable long id) {
         creditCardRepository.deleteById(id);
         return true;
     }

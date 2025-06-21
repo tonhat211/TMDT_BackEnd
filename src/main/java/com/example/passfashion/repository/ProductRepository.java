@@ -1,6 +1,7 @@
 package com.example.passfashion.repository;
 
 import com.example.passfashion.model.Product;
+import com.example.passfashion.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,11 +31,15 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             """)
     Page<Product> findNewest(Pageable pageable);
 
+
     @Query("""
             SELECT DISTINCT p.material
             FROM Product p WHERE p.material IS NOT NULL
             """)
     List<String> findDistinctMaterials();
+
+    List<Product> findAllByUser(User user);
+
 }
 
 //

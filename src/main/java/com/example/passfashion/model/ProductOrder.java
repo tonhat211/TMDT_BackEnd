@@ -2,11 +2,7 @@ package com.example.passfashion.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,6 +25,9 @@ public class ProductOrder {
   private Integer quantity;
   @JsonProperty("imageUrl")
   private String imageUrl;
+  @ManyToOne
+  @JoinColumn(name = "category_id")
+  private Category category;
 
   @Override
   public String toString() {
@@ -41,4 +40,15 @@ public class ProductOrder {
         '}';
   }
 
+  public Category getCategory() {
+    return category;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
 }

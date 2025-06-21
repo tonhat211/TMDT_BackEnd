@@ -15,8 +15,8 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "name", nullable = false)
-    private String name;
+//    @Column(name = "name", nullable = false)
+//    private String name;
 
     @Column(name = "phone", nullable = false)
     private String phone;
@@ -67,13 +67,13 @@ public class Address {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
 
     public String getPhone() {
         return phone;

@@ -1,9 +1,12 @@
+
 package com.example.passfashion.controller;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.passfashion.model.Order;
+import com.example.passfashion.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,23 +18,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.passfashion.dto.Request.AddressUpdateRequest;
-import com.example.passfashion.dto.Request.ForgotPasswordRequest;
 import com.example.passfashion.dto.Request.LoginRequest;
 import com.example.passfashion.dto.Request.RegisterRequest;
-import com.example.passfashion.dto.Request.ResetPasswordRequest;
 import com.example.passfashion.dto.Request.UserUpdateRequest;
-import com.example.passfashion.dto.Request.VerifyCodeRequest;
 import com.example.passfashion.dto.Response.AddressResponse;
 import com.example.passfashion.dto.Response.UserResponse;
-import com.example.passfashion.dto.Response.VerifyCodeResponse;
 import com.example.passfashion.model.Address;
 import com.example.passfashion.model.User;
 import com.example.passfashion.repository.AddressRepository;
 import com.example.passfashion.repository.UserRepository;
 import com.example.passfashion.service.UserService;
+import com.example.passfashion.dto.Request.ForgotPasswordRequest;
+import com.example.passfashion.dto.Request.ResetPasswordRequest;
+import com.example.passfashion.dto.Request.VerifyCodeRequest;
+import com.example.passfashion.dto.Response.VerifyCodeResponse;
 
-import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
+import jakarta.mail.MessagingException;
 
 @RestController
 @RequestMapping("api/v1/users")
@@ -45,13 +48,15 @@ public class UserController {
     // Xử lý Đăng nhập, đăng xuất
     @Autowired
     private UserService userService;
+    @Autowired
+    private OrderService orderService;
 
     @PostMapping("/login")
     public UserResponse login(@Valid @RequestBody LoginRequest request) {
         return userService.login(request);
     }
 
-    @PostMapping("/register")
+     @PostMapping("/register")
     public UserResponse register(@Valid @RequestBody RegisterRequest request) {
         return userService.register(request);
     }
@@ -136,5 +141,15 @@ public class UserController {
     @GetMapping("/me")
     public User getCurrentUser() {
         return userService.getCurrentUser();
+    }
+
+    @GetMapping("/spending/{userId}")
+    public ResponseEntity<?> getSpendingData(@PathVariable long userId) {
+        try {
+            return ResponseEntity.ok(orderService.getSpendingData(userId));
+        } catch (Exception e) {
+            System.err.println("Error fetching data: " + e.getMessage());
+            return ResponseEntity.status(500).body("Failed to fetch data: " + e.getMessage());
+        }
     }
 }
