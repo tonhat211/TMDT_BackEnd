@@ -1,3 +1,4 @@
+
 package com.example.passfashion.controller;
 
 import java.util.ArrayList;
@@ -27,8 +28,13 @@ import com.example.passfashion.model.User;
 import com.example.passfashion.repository.AddressRepository;
 import com.example.passfashion.repository.UserRepository;
 import com.example.passfashion.service.UserService;
+import com.example.passfashion.dto.Request.ForgotPasswordRequest;
+import com.example.passfashion.dto.Request.ResetPasswordRequest;
+import com.example.passfashion.dto.Request.VerifyCodeRequest;
+import com.example.passfashion.dto.Response.VerifyCodeResponse;
 
 import jakarta.validation.Valid;
+import jakarta.mail.MessagingException;
 
 @RestController
 @RequestMapping("api/v1/users")
@@ -50,12 +56,9 @@ public class UserController {
         return userService.login(request);
     }
 
-    @PostMapping("/register")
+     @PostMapping("/register")
     public UserResponse register(@Valid @RequestBody RegisterRequest request) {
-        System.out.println(
-                "Register request: " + request.getEmail() + ", " + request.getPwd() + ", " + request.getPhone());
         return userService.register(request);
-        // return null;
     }
 
     @GetMapping("/{id}")
@@ -63,12 +66,31 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    // @PostMapping("/forgot-password")
-    // public ResponseEntity<String> forgotPassword(@RequestBody
-    // ForgotPasswordRequest request) {
-    // userService.sendPasswordResetEmail(request.getEmail());
-    // return ResponseEntity.ok("Email reset mật khẩu đã được gửi");
-    // }
+    // ==================================================================
+    @PostMapping("/resend-code")
+    public ResponseEntity<String> resendCode(@RequestBody ForgotPasswordRequest request) throws MessagingException {
+        userService.resendCode(request.getEmail());
+        return ResponseEntity.ok("Mã xác nhận mới đã được gửi");
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordRequest request) throws MessagingException {
+        userService.sendPasswordResetEmail(request.getEmail());
+        return ResponseEntity.ok("Email reset mật khẩu đã được gửi");
+    }
+
+    @PostMapping("/verify-code")
+    public ResponseEntity<?> verifyCode(@RequestBody VerifyCodeRequest request) {
+        boolean isValid = userService.verifyCode(request.getEmail(), request.getCode());
+        return ResponseEntity.ok(new VerifyCodeResponse(isValid));
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordRequest request) {
+        userService.resetPassword(request.getEmail(), request.getPassword());
+        return ResponseEntity.ok("Mật khẩu đã được cập nhật");
+    }
+    // ==========================================================================
 
     @PutMapping("/{id}")
     public boolean updateUserById(@PathVariable long id, @RequestBody UserUpdateRequest request) {

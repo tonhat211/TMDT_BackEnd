@@ -68,14 +68,15 @@ public class ProductController {
             throw new SecurityException("Không thể lấy userId từ token");
         }
 
-        // if (!authenticatedUserId.equals(request.getUserId())) {
-        // throw new IllegalArgumentException("User ID không khớp với người dùng đã đăng
-        // nhập");
-        // }
         request.setUserId(authenticatedUserId);
 
         PostProductResponse response = productService.createProduct(request);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/material")
+    public ResponseEntity<List<String>> getMaterialList() {
+        return ResponseEntity.ok(productService.findDistinctMaterials());
     }
 
     // localhost:8080/api/v1/product/tui-xach?sortBy=price&direction=asc&page=0&size=10

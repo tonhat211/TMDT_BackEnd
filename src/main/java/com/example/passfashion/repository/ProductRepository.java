@@ -31,7 +31,15 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             """)
     Page<Product> findNewest(Pageable pageable);
 
+
+    @Query("""
+            SELECT DISTINCT p.material
+            FROM Product p WHERE p.material IS NOT NULL
+            """)
+    List<String> findDistinctMaterials();
+
     List<Product> findAllByUser(User user);
+
 }
 
 //

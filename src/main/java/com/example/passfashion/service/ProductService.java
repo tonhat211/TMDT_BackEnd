@@ -191,4 +191,8 @@ public class ProductService {
 
         productRepository.delete(product); // Tự động xoá images vì cascade
     }
+
+    public List<String> findDistinctMaterials() {
+        return productRepository.findDistinctMaterials();
+    }
 }

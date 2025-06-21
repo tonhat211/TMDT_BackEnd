@@ -34,8 +34,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers("/api/v1/products/**").permitAll()
                         .requestMatchers("/api/v1/products/create").authenticated()
+                        .requestMatchers("/api/v1/products/material").authenticated()
+                        .requestMatchers("/api/v1/products/**").permitAll()
                         .requestMatchers("/api/v1/upload").authenticated() // Yêu cầu xác thực
                         .requestMatchers("/api/v1/comments/**").permitAll()
                         .requestMatchers("/api/v1/categories/**").permitAll()
