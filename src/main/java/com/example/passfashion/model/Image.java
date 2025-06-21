@@ -19,7 +19,7 @@ public class Image {
     private String alt;
 
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "product_id", nullable = true)
     @JsonIgnore
     private Product product;
 

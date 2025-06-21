@@ -105,12 +105,40 @@ public class ProductController {
     public ResponseEntity<ProductDetailResponse> findById(
             @PathVariable long id) {
         System.out.println("/product/detail/" + id);
-        Product product = productRepository.findById(id).orElse(null);
+        Product product = productRepository.findByIdAdmin(id);
+        System.out.println("lay product done");
         Category category = product.getCategory();
+        System.out.println("lay category done");
         User owner = product.getUser();
+        System.out.println("lay owner done");
+
         List<Image> images = product.getImages();
+        System.out.println("lay images done");
+
         List<CommentResponse> comments = commentService.findCommentByProductId(id);
+        System.out.println("lay comments done");
         ProductDetailResponse result = new ProductDetailResponse(product, category, images, owner, comments);
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/owner/{id}")
+    public ResponseEntity<Page<BasicProductResponse>> findByUserId(
+            @PathVariable long id,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = Constant.PAGE_SIZE_STRING) int size,
+            @RequestParam(defaultValue = "price") String sortBy,
+            @RequestParam(defaultValue = "desc") String direction) {
+
+        System.out.println("/products/owner/" + id + "\tpage: " + page);
+        Sort sort = Sort.by(Sort.Direction.fromString(direction), sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<Product> productPage = productRepository.findByUserId(id, pageable);
+        Page<BasicProductResponse> result = productPage.map(product -> new BasicProductResponse(
+                product.getId(),
+                product.getName(),
+                product.getPrice(),
+                product.getImages(),
+                product.getIsSold()));
         return ResponseEntity.ok(result);
     }
 

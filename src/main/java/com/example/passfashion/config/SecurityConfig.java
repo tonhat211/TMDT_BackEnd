@@ -36,6 +36,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/v1/products/create").authenticated()
                         .requestMatchers("/api/v1/products/material").authenticated()
+                        .requestMatchers("/api/v1/products/detail/**").permitAll()
                         .requestMatchers("/api/v1/products/**").permitAll()
                         .requestMatchers("/api/v1/upload").authenticated() // Yêu cầu xác thực
                         .requestMatchers("/api/v1/comments/**").permitAll()

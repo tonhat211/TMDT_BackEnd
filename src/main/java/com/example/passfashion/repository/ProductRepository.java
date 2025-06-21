@@ -22,6 +22,14 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             """)
     Page<Product> findByCategory(@Param("categoryLink") String categoryLink, Pageable pageable);
 
+    @Query("""
+            SELECT p FROM Product p
+            WHERE p.isDeleted = false
+            AND p.isSold = false
+            AND p.id = :id
+            """)
+    Product findByIdAdmin(@Param("id") long id);
+
     Optional<Product> findById(Long id);
 
     @Query("""
@@ -39,6 +47,14 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<String> findDistinctMaterials();
 
     List<Product> findAllByUser(User user);
+
+    @Query("""
+            SELECT p FROM Product p
+            WHERE p.isDeleted = false
+            AND p.isSold = false
+            AND p.user.id = :id
+            """)
+    Page<Product> findByUserId(@Param("id") long id, Pageable pageable);
 
 }
 

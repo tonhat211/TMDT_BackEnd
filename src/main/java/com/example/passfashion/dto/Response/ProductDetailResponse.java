@@ -26,7 +26,7 @@ public class ProductDetailResponse {
         this.category = (category);
         if (images != null && !images.isEmpty()) {
             for (Image image : images) {
-                this.images.add(Constant.PRODUCT_IMG_DIR + "/" + image.getUrl().trim());
+                this.images.add(image.getUrl().trim());
             }
         }
         if (product.getIsSold())
@@ -40,8 +40,9 @@ public class ProductDetailResponse {
         owner.setRating(user.getRating());
         owner.setTotalReview(user.getTotalReview());
         if (user.getImage() != null)
-            owner.setAvatar(Constant.AVATAR_IMG_DIR + "/" + user.getImage().getUrl());
-        //
+            owner.setAvatar(user.getImage().getUrl());
+        else
+            owner.setAvatar("uploads/avatar.jpg");
         this.comments = comments;
     }
 
