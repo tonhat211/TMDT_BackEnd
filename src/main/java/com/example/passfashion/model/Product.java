@@ -72,11 +72,11 @@ public class Product {
     @Column(name = "material", nullable = true)
     private String material;
 
-    @Column(name = "salePrice", nullable = true)
-    private Double salePrice;
+    @Column(name = "salePrice", nullable = true, columnDefinition = "DOUBLE DEFAULT 0")
+    private double salePrice =0.0;
 
-    @Column(name = "negotiable", nullable = true)
-    private Boolean negotiable;
+    @Column(name = "negotiable", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean negotiable;
 
     @Column(name = "brand", nullable = true)
     private String brand;
@@ -87,8 +87,8 @@ public class Product {
     @Column(name = "pickupAddress", nullable = true)
     private String pickupAddress; // Chỉ có tên thành phố thôi
 
-    @Column(name = "termsAccepted", nullable = true)
-    private Boolean termsAccepted;
+    @Column(name = "termsAccepted", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean termsAccepted;
 
     @PrePersist
     @PreUpdate
