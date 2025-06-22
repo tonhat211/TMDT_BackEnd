@@ -111,6 +111,7 @@ public class UserController {
         user.setEmail(request.getEmail());
         user.setBirthday(request.getBirthday());
         user.setPhone(request.getPhone());
+        user.setAvatar(request.getAvatar());
 
         // Save và return true nếu không lỗi
         userRepository.save(user);

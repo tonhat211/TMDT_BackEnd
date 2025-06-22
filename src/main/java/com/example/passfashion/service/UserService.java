@@ -86,13 +86,13 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("Email không tồn tại"));
 
         String code = String.format("%04d", new Random().nextInt(10000));
-        verificationCodes.put(email, new VerificationCode(code, LocalDateTime.now().plusSeconds(60)));
+        verificationCodes.put(email, new VerificationCode(code, LocalDateTime.now().plusSeconds(120)));
 
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setTo(email);
         helper.setSubject("Mã xác nhận đặt lại mật khẩu");
-        helper.setText("Mã xác nhận của bạn là: " + code + "\nMã có hiệu lực trong 60 giây.", true);
+        helper.setText("Mã xác nhận của bạn là: " + code + "\nMã có hiệu lực trong 2 phút.", true);
         mailSender.send(message);
     }
 
