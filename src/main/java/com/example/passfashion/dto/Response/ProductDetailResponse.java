@@ -39,8 +39,8 @@ public class ProductDetailResponse {
         owner.setName(user.getName());
         owner.setRating(user.getRating());
         owner.setTotalReview(user.getTotalReview());
-        if (user.getImage() != null)
-            owner.setAvatar(Constant.AVATAR_IMG_DIR + "/" + user.getImage().getUrl());
+        if (user.getAvatar() != null)
+            owner.setAvatar(user.getAvatar());
         //
         this.comments = comments;
     }

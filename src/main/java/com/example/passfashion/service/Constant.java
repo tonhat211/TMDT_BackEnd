@@ -3,7 +3,7 @@ package com.example.passfashion.service;
 public class Constant {
     public static final String PRODUCT_IMG_DIR = "images/products";
     public static final String AVATAR_IMG_DIR = "images/avatars";
-    public static final String THUMBNAIL_IMG_DIR = "images/thumbnails";
+    // public static final String THUMBNAIL_IMG_DIR = "images/thumbnails";
     public static final String ICON_IMG_DIR = "images/icons";
 
     public static final String PAGE_SIZE_STRING = "10";

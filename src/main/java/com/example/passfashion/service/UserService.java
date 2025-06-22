@@ -130,7 +130,7 @@ public class UserService {
         response.setEmail(user.getEmail());
         response.setBirthday(user.getBirthday());
         response.setPhone(user.getPhone());
-        response.setImageUrl(user.getImage() != null ? user.getImage().getUrl() : null);
+        response.setAvatar(user.getAvatar());
         return response;
     }
 
