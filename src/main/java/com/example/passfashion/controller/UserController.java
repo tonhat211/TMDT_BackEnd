@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.passfashion.model.Order;
 import com.example.passfashion.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.passfashion.dto.Request.AddressUpdateRequest;
+import com.example.passfashion.dto.Request.AddressRequest;
 import com.example.passfashion.dto.Request.LoginRequest;
 import com.example.passfashion.dto.Request.RegisterRequest;
 import com.example.passfashion.dto.Request.UserUpdateRequest;
@@ -121,7 +120,7 @@ public class UserController {
     }
 
     @PutMapping("/address-update")
-    public boolean updateUserAddress(@RequestBody AddressUpdateRequest request) {
+    public boolean updateUserAddress(@RequestBody AddressRequest request) {
         Optional<Address> addressOptional = addressRepository.findById(request.getId());
         if (addressOptional.isEmpty()) {
             throw new RuntimeException("Address not found with id: " + request.getId());
@@ -133,6 +132,21 @@ public class UserController {
         address.setDetail(request.getDetail());
         address.setPhone(request.getPhone());
 
+        // Save và return true nếu không lỗi
+        addressRepository.save(address);
+        return true;
+    }
+
+    @PostMapping("/add-address")
+    public boolean addUserAddress(@RequestBody AddressRequest request) {
+        User user = userRepository.findById(request.getUserId()).orElseThrow();
+        Address address = new Address();
+        address.setProvince(request.getProvince());
+        address.setDistrict(request.getDistrict());
+        address.setWard(request.getWard());
+        address.setDetail(request.getDetail());
+        address.setPhone(request.getPhone());
+        address.setUser(user);
         // Save và return true nếu không lỗi
         addressRepository.save(address);
         return true;
