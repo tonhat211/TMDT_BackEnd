@@ -4,11 +4,14 @@ package com.example.passfashion.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.example.passfashion.model.Order;
 import com.example.passfashion.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.passfashion.dto.Request.AddressUpdateRequest;
 import com.example.passfashion.dto.Request.LoginRequest;
+import com.example.passfashion.dto.Request.LoginRequestAdmin;
 import com.example.passfashion.dto.Request.RegisterRequest;
 import com.example.passfashion.dto.Request.UserUpdateRequest;
 import com.example.passfashion.dto.Response.AddressResponse;
@@ -56,7 +60,12 @@ public class UserController {
         return userService.login(request);
     }
 
-     @PostMapping("/register")
+    @PostMapping("/login-admin")
+    public UserResponse loginAdmin(@Valid @RequestBody LoginRequestAdmin request) {
+        return userService.login(new LoginRequest(request.getEmail(), request.getPwd()));
+    }
+
+    @PostMapping("/register")
     public UserResponse register(@Valid @RequestBody RegisterRequest request) {
         return userService.register(request);
     }
@@ -151,5 +160,24 @@ public class UserController {
             System.err.println("Error fetching data: " + e.getMessage());
             return ResponseEntity.status(500).body("Failed to fetch data: " + e.getMessage());
         }
+    }
+
+    @GetMapping("/all")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<UserResponse>> getAllUser() {
+        List<User> users = userRepository.findAll();
+        List<UserResponse> userResponses = users.stream()
+                .map(userService::convertToUserResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(userResponses);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng với id: " + id));
+        userRepository.delete(user);
+        return ResponseEntity.ok("Xóa người dùng thành công");
     }
 }
