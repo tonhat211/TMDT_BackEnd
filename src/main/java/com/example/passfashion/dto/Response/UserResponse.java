@@ -21,7 +21,7 @@ public class UserResponse {
     String email;
     LocalDate birthday;
     String phone;
-    String imageUrl;
+    String avatar;
     String token;
 
     // getter and setter
@@ -65,12 +65,12 @@ public class UserResponse {
         this.phone = phone;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getToken() {

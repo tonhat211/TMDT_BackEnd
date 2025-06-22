@@ -40,9 +40,9 @@ public class User {
     @Column(name = "name", nullable = true)
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "image_id", referencedColumnName = "id")
-    private Image image;
+    // @ManyToOne(fetch = FetchType.EAGER)
+    // @JoinColumn(name = "image_id", referencedColumnName = "id")
+    // private Image image;
 
     @Column(name = "email", nullable = false)
     private String email;
@@ -75,13 +75,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    // @Column(name = "is_verified", nullable = false, columnDefinition = "BOOLEAN
-    // DEFAULT FALSE")
-    // private boolean isVerified;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders = new ArrayList<>();
 
-    @Transient
+    @Column(name = "avatar", nullable = true)
     private String avatar;
 
     @PrePersist
@@ -114,13 +111,13 @@ public class User {
         this.name = name;
     }
 
-    public Image getImage() {
-        return image;
-    }
+    // public Image getImage() {
+    // return image;
+    // }
 
-    public void setImage(Image image) {
-        this.image = image;
-    }
+    // public void setImage(Image image) {
+    // this.image = image;
+    // }
 
     public String getEmail() {
         return email;
