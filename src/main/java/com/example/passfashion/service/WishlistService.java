@@ -22,6 +22,7 @@ public class WishlistService {
    */
   public List<Product> getWishlistByUserId(Long userId) {
     // Call the repository method to find all products in the wishlist by user ID
+    System.out.println("Fetching wishlist for user ID: " + userId);
     return wishlistRepo.findAllProductsByUserId(userId);
   }
 
@@ -32,7 +33,7 @@ public class WishlistService {
    * @param productId the ID of the product to add
    * @return an optional product if added successfully, otherwise empty
    */
-  public Optional<String> addProductToWishlist(Long userId, Long productId) {
+  public Optional<String> addProductToWishlist(Long userId, Long productId) throws Exception {
     // Call the repository method to add a product to the wishlist
     return wishlistRepo.addProductToWishlist(userId, productId);
 
