@@ -26,7 +26,7 @@ public class ProductDetailResponse {
         this.category = (category);
         if (images != null && !images.isEmpty()) {
             for (Image image : images) {
-                this.images.add(Constant.PRODUCT_IMG_DIR + "/" + image.getUrl().trim());
+                this.images.add(image.getUrl().trim());
             }
         }
         if (product.getIsSold())
@@ -41,7 +41,6 @@ public class ProductDetailResponse {
         owner.setTotalReview(user.getTotalReview());
         if (user.getAvatar() != null)
             owner.setAvatar(user.getAvatar());
-        //
         this.comments = comments;
     }
 

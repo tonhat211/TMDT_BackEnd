@@ -2,10 +2,16 @@ package com.example.passfashion.dto.Response;
 
 import com.example.passfashion.model.Image;
 import com.example.passfashion.service.Constant;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 // dung trong product,... hien thi productItem
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class BasicProductResponse {
     private long id;
     private String name;
@@ -19,6 +25,8 @@ public class BasicProductResponse {
         this.price = price;
         if (images != null && !images.isEmpty()) {
             this.thumbnail = images.get(0).getUrl();
+        } else {
+            this.thumbnail = "uploads/default.png";
         }
         if (isSold)
             this.isSold = true;
@@ -26,43 +34,5 @@ public class BasicProductResponse {
             this.isSold = false;
     }
 
-    public boolean isSold() {
-        return isSold;
-    }
 
-    public void setSold(boolean sold) {
-        isSold = sold;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
 }

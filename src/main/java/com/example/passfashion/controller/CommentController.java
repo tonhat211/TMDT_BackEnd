@@ -37,9 +37,10 @@ public class CommentController {
 
     @PostMapping
     public ResponseEntity<List<CommentResponse>> addComment(@RequestBody CommentRequest request) {
-        System.out.println("add comment");
+        System.out.println("add comment: userId: " +request.getUserId());
+        User user = userRepository.findById(request.getUserId()).get();
         Comment comment = new Comment();
-        comment.setUser(new User(request.getUserId()));
+        comment.setUser(user);
         comment.setProduct(new Product(request.getProductId()));
         comment.setContent(request.getContent());
         comment.setLevel(request.getLevel());
