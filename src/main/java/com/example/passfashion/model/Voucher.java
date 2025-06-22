@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,10 +21,20 @@ public class Voucher {
     private int discount;
     private String description;
     @Size(min = 3,message ="Voucher code must longer than 3!" )
+    @Column(unique = true, nullable = false)
     private String code;
     private int quantity;
     private boolean isActive;
     private int minOrderValue;
+    private LocalDate expiryDate;
+
+    public LocalDate getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(LocalDate expiryDate) {
+        this.expiryDate = expiryDate;
+    }
 
     public Long getId() {
         return id;
