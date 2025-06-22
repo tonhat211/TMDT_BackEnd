@@ -123,7 +123,7 @@ public class UserService {
     // ========================================================================
 
     // 👉 Đây là method chuyển đổi User → UserResponse, viết nội bộ trong service
-    private UserResponse convertToUserResponse(User user) {
+    public UserResponse convertToUserResponse(User user) {
         UserResponse response = new UserResponse();
         response.setId(user.getId());
         response.setName(user.getName());
@@ -131,6 +131,7 @@ public class UserService {
         response.setBirthday(user.getBirthday());
         response.setPhone(user.getPhone());
         response.setAvatar(user.getAvatar());
+        response.setRole(user.getRole());
         return response;
     }
 

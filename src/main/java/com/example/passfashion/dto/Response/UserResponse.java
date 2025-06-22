@@ -2,6 +2,7 @@ package com.example.passfashion.dto.Response;
 
 import java.time.LocalDate;
 
+import com.example.passfashion.model.enums.Role;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.AccessLevel;
@@ -22,6 +23,7 @@ public class UserResponse {
     LocalDate birthday;
     String phone;
     String avatar;
+    Role role;
     String token;
 
     // getter and setter
@@ -80,5 +82,11 @@ public class UserResponse {
     public void setToken(String token) {
         this.token = token;
     }
+    public Role getRole() {
+        return role;
+    }
 
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }
