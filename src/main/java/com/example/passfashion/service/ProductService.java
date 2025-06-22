@@ -1,6 +1,7 @@
 package com.example.passfashion.service;
 
 import com.example.passfashion.dto.Request.PostProductRequest;
+import com.example.passfashion.dto.Response.BasicProductResponse;
 import com.example.passfashion.dto.Response.PostProductResponse;
 import com.example.passfashion.model.Category;
 import com.example.passfashion.model.Image;
@@ -194,5 +195,22 @@ public class ProductService {
 
     public List<String> findDistinctMaterials() {
         return productRepository.findDistinctMaterials();
+    }
+
+    public List<Product> getProductByUser(long userId) {
+        User user = entityManager.find(User.class, userId);
+        return productRepository.findByUserIdWithImages(userId);
+    }
+
+    public Product getProductById(long userId) {
+        return productRepository.findById(userId);
+    }
+
+    public void updateProduct(long productId, Product product) {
+        Product oldProduct = productRepository.findById(productId);
+        oldProduct.setName(product.getName());
+        oldProduct.setPrice(product.getPrice());
+        oldProduct.setDescription(product.getDescription());
+        productRepository.save(oldProduct);
     }
 }
