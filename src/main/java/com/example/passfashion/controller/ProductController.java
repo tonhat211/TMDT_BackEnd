@@ -200,4 +200,31 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+    @GetMapping("/seller/{userId}")
+    public ResponseEntity<?> getProductByUser(@PathVariable long userId) {
+        try {
+            return ResponseEntity.ok(productService.getProductByUser(userId));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/find/{productId}")
+    public ResponseEntity<?> getProductById(@PathVariable long productId) {
+        try {
+            return ResponseEntity.ok(productService.getProductById(productId));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/update/{productId}")
+    public ResponseEntity<?> getProductById(@PathVariable long productId,@RequestBody Product product) {
+        try {
+            productService.updateProduct(productId,product);
+            return ResponseEntity.ok("Update product successfully!");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 }
