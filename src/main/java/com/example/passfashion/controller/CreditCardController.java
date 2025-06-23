@@ -1,25 +1,16 @@
 package com.example.passfashion.controller;
 
-import com.example.passfashion.dto.Request.AddressUpdateRequest;
 import com.example.passfashion.dto.Request.CreditCardRequest;
-import com.example.passfashion.dto.Request.UserUpdateRequest;
-import com.example.passfashion.dto.Response.AddressResponse;
 import com.example.passfashion.dto.Response.CreditCardResponse;
-import com.example.passfashion.dto.Response.UserResponse;
-import com.example.passfashion.model.Address;
 import com.example.passfashion.model.CreditCard;
 import com.example.passfashion.model.User;
-import com.example.passfashion.repository.AddressRepository;
-import com.example.passfashion.repository.CategoryRepository;
 import com.example.passfashion.repository.CreditCardRepository;
 import com.example.passfashion.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/credit_card")

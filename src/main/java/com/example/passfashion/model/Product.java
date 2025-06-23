@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.passfashion.utils.VietnameseUtils;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -73,7 +73,7 @@ public class Product {
     private String material;
 
     @Column(name = "salePrice", nullable = true, columnDefinition = "DOUBLE DEFAULT 0")
-    private double salePrice =0.0;
+    private double salePrice = 0.0;
 
     @Column(name = "negotiable", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean negotiable;

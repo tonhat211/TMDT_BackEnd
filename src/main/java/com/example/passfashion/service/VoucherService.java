@@ -18,12 +18,16 @@ public class VoucherService {
     }
 
     public void addVoucher(VoucherRequest request) {
+        if (voucherRepository.findByCode(request.getCode()).isPresent()) {
+            throw new RuntimeException("Voucher code already exists!");
+        }
         Voucher voucher = new Voucher();
         voucher.setCode(request.getCode());
         voucher.setDescription(request.getDescription());
         voucher.setDiscount(request.getDiscount());
         voucher.setQuantity(request.getQuantity());
         voucher.setMinOrderValue(request.getMinOrderValue());
+        voucher.setExpiryDate(request.getExpiryDate());
         voucherRepository.save(voucher);
     }
 
@@ -45,11 +49,13 @@ public class VoucherService {
             voucher.setMinOrderValue(request.getMinOrderValue());
         } else if (request.getDiscount()!=0) {
             voucher.setDiscount(request.getDiscount());
+        }else if (request.getExpiryDate()!=null) {
+            voucher.setExpiryDate(request.getExpiryDate());
         }
         voucherRepository.save(voucher);
     }
 
     public Voucher getVoucherByCode(String voucherCode) {
-        return voucherRepository.findDistinctByCode(voucherCode);
+        return (Voucher) voucherRepository.findByCode(voucherCode).orElseThrow();
     }
 }

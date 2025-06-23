@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "comments")
 public class Comment {
@@ -15,26 +17,28 @@ public class Comment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 
-    @Column(name="content", nullable = false)
+    @Column(name = "content", nullable = false)
     private String content;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
+    @JsonIgnore
     private Product product;
 
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private Comment parentComment;
 
-    @Column(name="level", nullable = false, columnDefinition = "INT DEFAULT 0")
+    @Column(name = "level", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int level;
 
     @Column(name = "created_at", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 
-    @Column(name="is_deleted", nullable = false, columnDefinition = "INT DEFAULT 0")
+    @Column(name = "is_deleted", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int isDeleted;
 
     public Comment() {

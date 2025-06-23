@@ -30,7 +30,14 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             """)
     Product findByIdAdmin(@Param("id") long id);
 
-    Optional<Product> findById(Long id);
+    @Query("""
+                SELECT DISTINCT p FROM Product p
+                LEFT JOIN FETCH p.images
+                WHERE p.isDeleted = false
+                AND p.isSold = false
+                AND p.id = :id
+            """)
+    Product findById(@Param("id") long id);
 
     @Query("""
             SELECT p FROM Product p
@@ -38,7 +45,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             AND p.isSold = false
             """)
     Page<Product> findNewest(Pageable pageable);
-
 
     @Query("""
             SELECT DISTINCT p.material
@@ -56,6 +62,16 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             """)
     Page<Product> findByUserId(@Param("id") long id, Pageable pageable);
 
+    @Query("""
+                SELECT DISTINCT p FROM Product p
+                LEFT JOIN FETCH p.images
+                WHERE p.isDeleted = false
+                AND p.isSold = false
+                AND p.user.id = :id
+            """)
+    List<Product> findByUserIdWithImages(@Param("id") long id);
+
+    List<Product> findByUserIdAndIsDeletedFalse(Long userId);
 }
 
 //

@@ -38,6 +38,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/users/**").hasRole("ADMIN")
                         // Quyền user
                         .requestMatchers("/api/v1/users/**").permitAll()
+                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/v1/ad/**").permitAll()
+                        .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/v1/products/create").authenticated()
                         .requestMatchers("/api/v1/products/material").authenticated()
                         .requestMatchers("/api/v1/products/detail/**").permitAll()

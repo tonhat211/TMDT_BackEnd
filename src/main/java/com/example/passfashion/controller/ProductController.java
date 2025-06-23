@@ -106,15 +106,9 @@ public class ProductController {
             @PathVariable long id) {
         System.out.println("/product/detail/" + id);
         Product product = productRepository.findByIdAdmin(id);
-        System.out.println("lay product done");
         Category category = product.getCategory();
-        System.out.println("lay category done");
         User owner = product.getUser();
-        System.out.println("lay owner done");
-
         List<Image> images = product.getImages();
-        System.out.println("lay images done");
-
         List<CommentResponse> comments = commentService.findCommentByProductId(id);
         System.out.println("lay comments done");
         ProductDetailResponse result = new ProductDetailResponse(product, category, images, owner, comments);
@@ -196,6 +190,34 @@ public class ProductController {
         try {
             productService.deleteProductById(id);
             return ResponseEntity.ok("Xoá sản phẩm thành công");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/seller/{userId}")
+    public ResponseEntity<?> getProductByUser(@PathVariable long userId) {
+        try {
+            return ResponseEntity.ok(productService.getProductByUser(userId));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/find/{productId}")
+    public ResponseEntity<?> getProductById(@PathVariable long productId) {
+        try {
+            return ResponseEntity.ok(productService.getProductById(productId));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/update/{productId}")
+    public ResponseEntity<?> getProductById(@PathVariable long productId, @RequestBody Product product) {
+        try {
+            productService.updateProduct(productId, product);
+            return ResponseEntity.ok("Update product successfully!");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }

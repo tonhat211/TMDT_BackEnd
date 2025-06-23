@@ -35,7 +35,7 @@ public class CommentController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<List<CommentResponse>> addComment(@RequestBody CommentRequest request) {
         System.out.println("add comment: userId: " +request.getUserId());
         User user = userRepository.findById(request.getUserId()).get();
