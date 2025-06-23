@@ -1,5 +1,6 @@
 package com.example.passfashion.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public class CreditCard {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     @DateTimeFormat(pattern = "MM/yy")
