@@ -197,19 +197,13 @@ public class ProductService {
         return productRepository.findDistinctMaterials();
     }
 
-    // public List<Product> getProductByUser(long userId) {
-    // User user = entityManager.find(User.class, userId);
-    // return productRepository.findByUserIdWithImages(userId);
-    // }
-
     public List<Product> getProductByUser(long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng với ID: " + userId));
+        User user = entityManager.find(User.class, userId);
         return productRepository.findByUserIdWithImages(userId);
     }
 
-    public Product getProductById(long productId) {
-        return productRepository.findById(productId);
+    public Product getProductById(long userId) {
+        return productRepository.findById(userId);
     }
 
     public void updateProduct(long productId, Product product) {

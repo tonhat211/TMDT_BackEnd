@@ -216,7 +216,7 @@ public class ProductController {
     @PutMapping("/update/{productId}")
     public ResponseEntity<?> getProductById(@PathVariable long productId, @RequestBody Product product) {
         try {
-            productService.updateProduct(productId, product);
+            productService.updateProduct(productId,product);
             return ResponseEntity.ok("Update product successfully!");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
