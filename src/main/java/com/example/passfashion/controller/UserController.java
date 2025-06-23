@@ -4,11 +4,13 @@ package com.example.passfashion.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-import com.example.passfashion.model.Order;
 import com.example.passfashion.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,8 +19,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.passfashion.dto.Request.AddressUpdateRequest;
+import com.example.passfashion.dto.Request.AddressRequest;
 import com.example.passfashion.dto.Request.LoginRequest;
+import com.example.passfashion.dto.Request.LoginRequestAdmin;
 import com.example.passfashion.dto.Request.RegisterRequest;
 import com.example.passfashion.dto.Request.UserUpdateRequest;
 import com.example.passfashion.dto.Response.AddressResponse;
@@ -56,7 +59,12 @@ public class UserController {
         return userService.login(request);
     }
 
-     @PostMapping("/register")
+    @PostMapping("/login-admin")
+    public UserResponse loginAdmin(@Valid @RequestBody LoginRequestAdmin request) {
+        return userService.login(new LoginRequest(request.getEmail(), request.getPwd()));
+    }
+
+    @PostMapping("/register")
     public UserResponse register(@Valid @RequestBody RegisterRequest request) {
         return userService.register(request);
     }
@@ -103,6 +111,7 @@ public class UserController {
         user.setEmail(request.getEmail());
         user.setBirthday(request.getBirthday());
         user.setPhone(request.getPhone());
+        user.setAvatar(request.getAvatar());
 
         // Save và return true nếu không lỗi
         userRepository.save(user);
@@ -121,7 +130,7 @@ public class UserController {
     }
 
     @PutMapping("/address-update")
-    public boolean updateUserAddress(@RequestBody AddressUpdateRequest request) {
+    public boolean updateUserAddress(@RequestBody AddressRequest request) {
         Optional<Address> addressOptional = addressRepository.findById(request.getId());
         if (addressOptional.isEmpty()) {
             throw new RuntimeException("Address not found with id: " + request.getId());
@@ -133,6 +142,21 @@ public class UserController {
         address.setDetail(request.getDetail());
         address.setPhone(request.getPhone());
 
+        // Save và return true nếu không lỗi
+        addressRepository.save(address);
+        return true;
+    }
+
+    @PostMapping("/add-address")
+    public boolean addUserAddress(@RequestBody AddressRequest request) {
+        User user = userRepository.findById(request.getUserId()).orElseThrow();
+        Address address = new Address();
+        address.setProvince(request.getProvince());
+        address.setDistrict(request.getDistrict());
+        address.setWard(request.getWard());
+        address.setDetail(request.getDetail());
+        address.setPhone(request.getPhone());
+        address.setUser(user);
         // Save và return true nếu không lỗi
         addressRepository.save(address);
         return true;
@@ -151,5 +175,24 @@ public class UserController {
             System.err.println("Error fetching data: " + e.getMessage());
             return ResponseEntity.status(500).body("Failed to fetch data: " + e.getMessage());
         }
+    }
+
+    @GetMapping("/all")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<UserResponse>> getAllUser() {
+        List<User> users = userRepository.findAll();
+        List<UserResponse> userResponses = users.stream()
+                .map(userService::convertToUserResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(userResponses);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng với id: " + id));
+        userRepository.delete(user);
+        return ResponseEntity.ok("Xóa người dùng thành công");
     }
 }

@@ -40,10 +40,6 @@ public class User {
     @Column(name = "name", nullable = true)
     private String name;
 
-    // @ManyToOne(fetch = FetchType.EAGER)
-    // @JoinColumn(name = "image_id", referencedColumnName = "id")
-    // private Image image;
-
     @Column(name = "email", nullable = false)
     private String email;
 
@@ -110,14 +106,6 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
-
-    // public Image getImage() {
-    // return image;
-    // }
-
-    // public void setImage(Image image) {
-    // this.image = image;
-    // }
 
     public String getEmail() {
         return email;

@@ -86,13 +86,13 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("Email không tồn tại"));
 
         String code = String.format("%04d", new Random().nextInt(10000));
-        verificationCodes.put(email, new VerificationCode(code, LocalDateTime.now().plusSeconds(60)));
+        verificationCodes.put(email, new VerificationCode(code, LocalDateTime.now().plusSeconds(120)));
 
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setTo(email);
         helper.setSubject("Mã xác nhận đặt lại mật khẩu");
-        helper.setText("Mã xác nhận của bạn là: " + code + "\nMã có hiệu lực trong 60 giây.", true);
+        helper.setText("Mã xác nhận của bạn là: " + code + "\nMã có hiệu lực trong 2 phút.", true);
         mailSender.send(message);
     }
 
@@ -123,7 +123,7 @@ public class UserService {
     // ========================================================================
 
     // 👉 Đây là method chuyển đổi User → UserResponse, viết nội bộ trong service
-    private UserResponse convertToUserResponse(User user) {
+    public UserResponse convertToUserResponse(User user) {
         UserResponse response = new UserResponse();
         response.setId(user.getId());
         response.setName(user.getName());
@@ -131,6 +131,7 @@ public class UserService {
         response.setBirthday(user.getBirthday());
         response.setPhone(user.getPhone());
         response.setAvatar(user.getAvatar());
+        response.setRole(user.getRole());
         return response;
     }
 

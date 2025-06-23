@@ -28,11 +28,10 @@ public class WishlistController {
   public ResponseEntity<List<WishlistResponse>> getWishlistByUserId(@PathVariable Long userId) {
     // get all wishlist product from userID
     List<Product> wishlist = wishlistService.getWishlistByUserId(userId);
-    if (wishlist.isEmpty()) {
-      return ResponseEntity.noContent().build();
-    }
-    // map product to wishlist response
+    wishlist.forEach(product -> System.out.println("Product: " + (product == null ? "null" : product.getId())));
+
     List<WishlistResponse> wishlistResponses = wishlist.stream()
+        .filter(product -> product != null && product.getId() != 0)
         .map(WishlistResponse::new)
         .toList();
 
@@ -44,14 +43,19 @@ public class WishlistController {
   public ResponseEntity<String> addProductToWishlist(
       @PathVariable Long userId,
       @PathVariable Long productId) {
+    try {
 
-    Optional<String> result = wishlistService.addProductToWishlist(userId, productId);
+      Optional<String> result = wishlistService.addProductToWishlist(userId, productId);
+      if (result.isEmpty()) {
+        return ResponseEntity.ok("success");
+      } else {
+        return ResponseEntity.ok("failed");
+      }
 
-    if (result.isEmpty()) {
-      return ResponseEntity.ok("Product added to wishlist successfully");
-    } else {
-      return ResponseEntity.badRequest().body(result.get());
+    } catch (Exception e) {
+      return ResponseEntity.status(500).body("Internal server error");
     }
+
   }
 
   // delete /api/v1/wishlists/{userId}/remove/{productId}

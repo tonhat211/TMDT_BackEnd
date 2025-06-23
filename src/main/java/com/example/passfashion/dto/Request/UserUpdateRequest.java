@@ -18,6 +18,7 @@ public class UserUpdateRequest {
     private String email;
     private String phone;
     private LocalDate birthday;
+    private String avatar;
 
     // Getter methods
     public String getFullName() {
@@ -50,5 +51,13 @@ public class UserUpdateRequest {
 
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }
