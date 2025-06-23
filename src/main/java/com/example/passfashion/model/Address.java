@@ -1,5 +1,6 @@
 package com.example.passfashion.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,8 +16,8 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-//    @Column(name = "name", nullable = false)
-//    private String name;
+    // @Column(name = "name", nullable = false)
+    // private String name;
 
     @Column(name = "phone", nullable = false)
     private String phone;
@@ -41,6 +42,7 @@ public class Address {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     public User getUser() {
@@ -75,13 +77,13 @@ public class Address {
         this.id = id;
     }
 
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
+    // public String getName() {
+    // return name;
+    // }
+    //
+    // public void setName(String name) {
+    // this.name = name;
+    // }
 
     public String getPhone() {
         return phone;

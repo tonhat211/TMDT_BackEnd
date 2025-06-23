@@ -1,5 +1,6 @@
 package com.example.passfashion.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,7 +21,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "orders")
 public class Order {
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -33,6 +33,7 @@ public class Order {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", nullable = false)
+  @JsonIgnore
   private User user;
 
   @OneToOne
@@ -116,19 +117,19 @@ public class Order {
     this.productOrder = productOrder;
   }
 
-  public VoucherOrder getVoucherOrder() {
-    return voucherOrder;
-  }
+    public VoucherOrder getVoucherOrder() {
+        return voucherOrder;
+    }
 
-  public void setVoucherOrder(VoucherOrder voucherOrder) {
-    this.voucherOrder = voucherOrder;
-  }
+    public void setVoucherOrder(VoucherOrder voucherOrder) {
+        this.voucherOrder = voucherOrder;
+    }
 
-  public String getStatus() {
-    return status;
-  }
+    public String getStatus() {
+        return status;
+    }
 
-  public void setStatus(String status) {
-    this.status = status;
-  }
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
