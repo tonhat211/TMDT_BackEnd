@@ -36,6 +36,7 @@ public class OrderController {
 
     return ResponseEntity.ok("Order creation process initiated");
   }
+
   @GetMapping("/sold-orders/{userId}")
   public ResponseEntity<?> getOrderBySeller(@PathVariable long userId) {
     try {
@@ -46,11 +47,11 @@ public class OrderController {
     }
   }
 
-
   @GetMapping("/bought-orders/{userId}")
   public ResponseEntity<?> getBoughtOrders(@PathVariable long userId) {
     try {
-      return ResponseEntity.ok(orderService.ordersBySeller(userId));
+      System.out.println("=========================================");
+      return ResponseEntity.ok(orderService.ordersUserBought(userId));
     } catch (Exception e) {
       System.err.println("Error fetching orders: " + e.getMessage());
       return ResponseEntity.status(500).body("Failed to fetch orders: " + e.getMessage());

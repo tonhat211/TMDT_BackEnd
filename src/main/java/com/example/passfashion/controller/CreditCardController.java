@@ -22,13 +22,14 @@ public class CreditCardController {
     private UserRepository userRepository;
 
     @GetMapping("/all/{userid}")
-    public List<CreditCardResponse> getCardsByUserId(@PathVariable long userid) throws Exception {
-        List<CreditCardResponse> list = creditCardRepository.findAllByUserId((userid));
+    public List<CreditCard> getCardsByUserId(@PathVariable long userid) throws Exception {
+        List<CreditCard> list = creditCardRepository.findAllByUserId((userid));
         return list;
     }
 
     @PutMapping("/update/{id}")
-    public boolean updateCardById(@PathVariable long id, @Valid @RequestBody CreditCardRequest request) throws Exception {
+    public boolean updateCardById(@PathVariable long id, @Valid @RequestBody CreditCardRequest request)
+            throws Exception {
         CreditCard creditCard = creditCardRepository.findById(id).orElseThrow(Exception::new);
         creditCard.setNumber(request.getNumber());
         creditCard.setOwnerName(request.getOwnerName());
@@ -39,7 +40,7 @@ public class CreditCardController {
     }
 
     @PostMapping("/add-card")
-    public boolean addCreditCard(@Valid@RequestBody CreditCardRequest request) {
+    public boolean addCreditCard(@Valid @RequestBody CreditCardRequest request) {
         CreditCard creditCard = new CreditCard();
         User user = userRepository.findById(request.getUserId()).orElseThrow();
         creditCard.setUser(user);

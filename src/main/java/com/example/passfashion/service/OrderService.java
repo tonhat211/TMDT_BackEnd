@@ -29,8 +29,11 @@ public class OrderService {
   private VoucherOrderRepository voucherOrderRepository;
   @Autowired
   ProductRepository productRepository;
-    @Autowired
-    private CategoryRepository categoryRepository;
+  @Autowired
+  private CategoryRepository categoryRepository;
+
+  @Autowired
+  private ProductRepository productRepo;
 
   public Optional<Order> createOrder(OrderRequest request) {
     User user = userRepository.findById(request.getIdUser())
@@ -55,25 +58,32 @@ public class OrderService {
     order.setProductOrder(product);
     order.setVoucherOrder(voucher);
 
+    productRepo.updateIsSold(product.getIdPro());
+    // TODO: handle exception
+
+    // update trạng thái của sản phẩm
+
     return Optional.of(orderRepository.save(order));
   }
 
   public List<Order> ordersBySeller(long userId) {
     User user = userRepository.findById(userId)
-            .orElseThrow(() -> new RuntimeException("User not found"));
+        .orElseThrow(() -> new RuntimeException("User not found"));
     List<Product> products = productRepository.findAllByUser(user);
     List<Order> orders = new ArrayList<>();
     for (Product product : products) {
-        List<Order> list = orderRepository.findAllByProductOrderId(product.getId());
-        orders.addAll(list);
+      List<Order> list = orderRepository.findAllByProductOrderId(product.getId());
+      orders.addAll(list);
     }
     return orders;
   }
 
   public List<Order> ordersUserBought(long userId) {
     User user = userRepository.findById(userId)
-            .orElseThrow(() -> new RuntimeException("User not found"));
+        .orElseThrow(() -> new RuntimeException("User not found"));
+
     return orderRepository.findAllByUserId(userId);
+
   }
 
   public List<SpendingDataPoint> getSpendingData(long userId) {
@@ -85,11 +95,11 @@ public class OrderService {
       String label = category.getTitle();
 
       double total = orders.stream()
-              .filter(order -> order.getProductOrder() != null &&
-                      order.getProductOrder().getCategory() != null &&
-                      order.getProductOrder().getCategory().getTitle().equalsIgnoreCase(label))
-              .mapToDouble(Order::getTotal)
-              .sum();
+          .filter(order -> order.getProductOrder() != null &&
+              order.getProductOrder().getCategory() != null &&
+              order.getProductOrder().getCategory().getTitle().equalsIgnoreCase(label))
+          .mapToDouble(Order::getTotal)
+          .sum();
 
       data.add(new SpendingDataPoint(label, total));
     }
@@ -99,8 +109,8 @@ public class OrderService {
 
   public void updateStatus(long orderId, OrderUpdateRequest request) {
     Order order = orderRepository.findById(orderId)
-            .orElseThrow(() -> new RuntimeException("Order not found"));
-    if(request.getStatus()!=null){
+        .orElseThrow(() -> new RuntimeException("Order not found"));
+    if (request.getStatus() != null) {
       order.setStatus(request.getStatus());
     } else if (request.getEmail() != null) {
       order.setEmail(request.getEmail());
@@ -109,8 +119,6 @@ public class OrderService {
     }
     orderRepository.save(order);
   }
-
-
 
   public record SpendingDataPoint(String label, double value) {
   }
