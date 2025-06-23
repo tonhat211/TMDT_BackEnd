@@ -21,7 +21,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "orders")
 public class Order {
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -118,19 +117,19 @@ public class Order {
     this.productOrder = productOrder;
   }
 
-  public VoucherOrder getVoucherOrder() {
-    return voucherOrder;
-  }
+    public VoucherOrder getVoucherOrder() {
+        return voucherOrder;
+    }
 
-  public void setVoucherOrder(VoucherOrder voucherOrder) {
-    this.voucherOrder = voucherOrder;
-  }
+    public void setVoucherOrder(VoucherOrder voucherOrder) {
+        this.voucherOrder = voucherOrder;
+    }
 
-  public String getStatus() {
-    return status;
-  }
+    public String getStatus() {
+        return status;
+    }
 
-  public void setStatus(String status) {
-    this.status = status;
-  }
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

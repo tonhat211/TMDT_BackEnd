@@ -46,7 +46,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             """)
     Page<Product> findNewest(Pageable pageable);
 
-
     @Query("""
             SELECT DISTINCT p.material
             FROM Product p WHERE p.material IS NOT NULL
@@ -71,7 +70,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     AND p.user.id = :id
 """)
     List<Product> findByUserIdWithImages(@Param("id") long id);
-
 }
 
 //

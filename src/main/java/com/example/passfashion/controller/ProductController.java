@@ -194,6 +194,7 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+
     @GetMapping("/seller/{userId}")
     public ResponseEntity<?> getProductByUser(@PathVariable long userId) {
         try {
@@ -213,7 +214,7 @@ public class ProductController {
     }
 
     @PutMapping("/update/{productId}")
-    public ResponseEntity<?> getProductById(@PathVariable long productId,@RequestBody Product product) {
+    public ResponseEntity<?> getProductById(@PathVariable long productId, @RequestBody Product product) {
         try {
             productService.updateProduct(productId,product);
             return ResponseEntity.ok("Update product successfully!");
