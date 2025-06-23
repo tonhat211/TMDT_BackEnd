@@ -10,6 +10,7 @@ import com.example.passfashion.model.Product;
 import com.example.passfashion.model.User;
 import com.example.passfashion.repository.ProductRepository;
 import com.example.passfashion.service.Constant;
+import com.example.passfashion.service.NotifyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +28,9 @@ import java.util.Map;
 public class AdminProductController {
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private NotifyService notifyService;
 
     @PostMapping("/all")
     public ResponseEntity<Page<AdminProductResponse>> findAllProducts(
@@ -56,6 +60,11 @@ public class AdminProductController {
         if(saved.getId()!=0) isSuccess = true;
         if(isSuccess) {
             re.put("id", id);
+            long userId = product.getUser().getId();
+            String name = product.getName();
+            System.out.println("deleteProduct: userId: " + userId + ", name: " + name);
+            String message ="Sản phẩm bị xóa do vi phạm chính sách: "+name +" với ID: "+ id;
+            notifyService.notifyUser(userId, message);
         }
         re.put("success", isSuccess);
 

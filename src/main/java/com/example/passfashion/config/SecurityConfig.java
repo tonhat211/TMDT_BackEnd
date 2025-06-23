@@ -40,6 +40,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/users/**").permitAll()
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/ad/**").permitAll()
+                        .requestMatchers("/ws/**").permitAll()
+                        .requestMatchers("/notify/**").permitAll()
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/v1/products/create").authenticated()
                         .requestMatchers("/api/v1/products/material").authenticated()
