@@ -25,7 +25,7 @@ public class CommentResponse {
         this.productId = productId;
         this.userId = userId;
         this.userName = userName;
-        this.userAvatar = Constant.AVATAR_IMG_DIR+"/"+ userAvatar;
+        this.userAvatar = userAvatar!=null? userAvatar : "uploads/avatar.jpg";
         this.content = content;
         this.createdAt = createdAt;
         this.parentId = parentId;
