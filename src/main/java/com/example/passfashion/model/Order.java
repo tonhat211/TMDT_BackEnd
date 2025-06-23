@@ -1,6 +1,7 @@
 package com.example.passfashion.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -21,101 +22,102 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "orders")
 public class Order {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
 
-  private String email;
-  private String phone;
-  private Double total;
-  private String status;
-  // Map đến User
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_id", nullable = false)
-  @JsonIgnore
-  private User user;
+    private String email;
+    private String phone;
+    private Double total;
+    private String status;
+    // Map đến User
 
-  @OneToOne
-  @JoinColumn(name = "address_order_id", nullable = false)
-  private AddressOrder addressOrder;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
+    private User user;
 
-  @OneToOne
-  @JoinColumn(name = "card_order_id", nullable = false)
-  private CardOrder cardOrder;
+    @OneToOne
+    @JoinColumn(name = "address_order_id", nullable = false)
+    private AddressOrder addressOrder;
 
-  @OneToOne
-  @JoinColumn(name = "product_order_id", nullable = false)
-  private ProductOrder productOrder;
+    @OneToOne
+    @JoinColumn(name = "card_order_id", nullable = false)
+    private CardOrder cardOrder;
 
-  @OneToOne
-  @JoinColumn(name = "voucher_order_id", nullable = false)
-  private VoucherOrder voucherOrder;
+    @OneToOne
+    @JoinColumn(name = "product_order_id", nullable = false)
+    private ProductOrder productOrder;
 
-  // Getters and Setters
-  public Long getId() {
-    return id;
-  }
+    @OneToOne
+    @JoinColumn(name = "voucher_order_id", nullable = false)
+    private VoucherOrder voucherOrder;
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
 
-  public String getEmail() {
-    return email;
-  }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+    public String getEmail() {
+        return email;
+    }
 
-  public String getPhone() {
-    return phone;
-  }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-  public void setPhone(String phone) {
-    this.phone = phone;
-  }
+    public String getPhone() {
+        return phone;
+    }
 
-  public Double getTotal() {
-    return total;
-  }
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-  public void setTotal(Double total) {
-    this.total = total;
-  }
+    public Double getTotal() {
+        return total;
+    }
 
-  public User getUser() {
-    return user;
-  }
+    public void setTotal(Double total) {
+        this.total = total;
+    }
 
-  public void setUser(User user) {
-    this.user = user;
-  }
+    public User getUser() {
+        return user;
+    }
 
-  public AddressOrder getAddressOrder() {
-    return addressOrder;
-  }
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-  public void setAddressOrder(AddressOrder addressOrder) {
-    this.addressOrder = addressOrder;
-  }
+    public AddressOrder getAddressOrder() {
+        return addressOrder;
+    }
 
-  public CardOrder getCardOrder() {
-    return cardOrder;
-  }
+    public void setAddressOrder(AddressOrder addressOrder) {
+        this.addressOrder = addressOrder;
+    }
 
-  public void setCardOrder(CardOrder cardOrder) {
-    this.cardOrder = cardOrder;
-  }
+    public CardOrder getCardOrder() {
+        return cardOrder;
+    }
 
-  public ProductOrder getProductOrder() {
-    return productOrder;
-  }
+    public void setCardOrder(CardOrder cardOrder) {
+        this.cardOrder = cardOrder;
+    }
 
-  public void setProductOrder(ProductOrder productOrder) {
-    this.productOrder = productOrder;
-  }
+    public ProductOrder getProductOrder() {
+        return productOrder;
+    }
+
+    public void setProductOrder(ProductOrder productOrder) {
+        this.productOrder = productOrder;
+    }
 
     public VoucherOrder getVoucherOrder() {
         return voucherOrder;

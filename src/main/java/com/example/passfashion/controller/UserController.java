@@ -33,6 +33,7 @@ import com.example.passfashion.repository.UserRepository;
 import com.example.passfashion.service.UserService;
 import com.example.passfashion.dto.Request.ForgotPasswordRequest;
 import com.example.passfashion.dto.Request.ResetPasswordRequest;
+import com.example.passfashion.dto.Request.UserRequest;
 import com.example.passfashion.dto.Request.VerifyCodeRequest;
 import com.example.passfashion.dto.Response.VerifyCodeResponse;
 
@@ -89,14 +90,21 @@ public class UserController {
 
     @PostMapping("/verify-code")
     public ResponseEntity<?> verifyCode(@RequestBody VerifyCodeRequest request) {
-        boolean isValid = userService.verifyCode(request.getEmail(), request.getCode());
-        return ResponseEntity.ok(new VerifyCodeResponse(isValid));
+        boolean success = userService.verifyCode(request.getEmail(), request.getCode());
+        return ResponseEntity.ok(new VerifyCodeResponse(success));
     }
 
     @PostMapping("/reset-password")
     public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordRequest request) {
         userService.resetPassword(request.getEmail(), request.getPassword());
         return ResponseEntity.ok("Mật khẩu đã được cập nhật");
+    }
+
+    @PostMapping("/send-verification-code")
+    public ResponseEntity<String> sendVerificationCode(@RequestBody ForgotPasswordRequest request)
+            throws MessagingException {
+        userService.sendVerificationCode(request.getEmail());
+        return ResponseEntity.ok("Mã xác nhận đã được gửi");
     }
     // ==========================================================================
 
@@ -195,4 +203,5 @@ public class UserController {
         userRepository.delete(user);
         return ResponseEntity.ok("Xóa người dùng thành công");
     }
+
 }

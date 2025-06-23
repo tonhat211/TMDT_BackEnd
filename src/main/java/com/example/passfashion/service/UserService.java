@@ -2,7 +2,9 @@ package com.example.passfashion.service;
 
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.passfashion.dto.Request.LoginRequest;
 import com.example.passfashion.dto.Request.RegisterRequest;
+import com.example.passfashion.dto.Request.UserRequest;
 import com.example.passfashion.dto.Response.UserResponse;
 import com.example.passfashion.model.User;
 import com.example.passfashion.model.enums.Role;
@@ -119,6 +122,18 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("Email không tồn tại"));
         user.setPwd(passwordEncoder.encode(password));
         userRepository.save(user);
+    }
+
+    public void sendVerificationCode(String email) throws MessagingException {
+        String code = String.format("%04d", new Random().nextInt(10000));
+        verificationCodes.put(email, new VerificationCode(code, LocalDateTime.now().plusSeconds(120)));
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setTo(email);
+        helper.setSubject("Mã xác nhận đăng ký");
+        helper.setText("Mã xác nhận: " + code + "\nHiệu lực: 2 phút.", true);
+        mailSender.send(message);
     }
     // ========================================================================
 
