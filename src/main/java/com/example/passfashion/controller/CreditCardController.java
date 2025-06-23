@@ -22,8 +22,8 @@ public class CreditCardController {
     private UserRepository userRepository;
 
     @GetMapping("/all/{userid}")
-    public List<CreditCard> getCardsByUserId(@PathVariable long userid) throws Exception {
-        List<CreditCard> list = creditCardRepository.findAllByUserId((userid));
+    public List<CreditCardResponse> getCardsByUserId(@PathVariable long userid) throws Exception {
+        List<CreditCardResponse> list = creditCardRepository.findAllByUserId((userid));
         return list;
     }
 

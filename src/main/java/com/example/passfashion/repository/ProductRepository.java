@@ -31,12 +31,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Product findByIdAdmin(@Param("id") long id);
 
     @Query("""
-    SELECT DISTINCT p FROM Product p
-    LEFT JOIN FETCH p.images
-    WHERE p.isDeleted = false
-    AND p.isSold = false
-    AND p.id = :id
-""")
+                SELECT DISTINCT p FROM Product p
+                LEFT JOIN FETCH p.images
+                WHERE p.isDeleted = false
+                AND p.isSold = false
+                AND p.id = :id
+            """)
     Product findById(@Param("id") long id);
 
     @Query("""
@@ -63,13 +63,15 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findByUserId(@Param("id") long id, Pageable pageable);
 
     @Query("""
-    SELECT DISTINCT p FROM Product p
-    LEFT JOIN FETCH p.images
-    WHERE p.isDeleted = false
-    AND p.isSold = false
-    AND p.user.id = :id
-""")
+                SELECT DISTINCT p FROM Product p
+                LEFT JOIN FETCH p.images
+                WHERE p.isDeleted = false
+                AND p.isSold = false
+                AND p.user.id = :id
+            """)
     List<Product> findByUserIdWithImages(@Param("id") long id);
+
+    List<Product> findByUserIdAndIsDeletedFalse(Long userId);
 }
 
 //
