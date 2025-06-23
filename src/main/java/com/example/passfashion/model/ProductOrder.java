@@ -19,6 +19,8 @@ public class ProductOrder {
 
   @JsonProperty("name")
   private String name;
+  @JsonProperty("id_pro")
+  private Long idPro;
   @JsonProperty("price")
   private Double price;
   @JsonProperty("quantity")
@@ -51,4 +53,21 @@ public class ProductOrder {
   public void setId(Long id) {
     this.id = id;
   }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public Long getIdPro() {
+    return idPro;
+  }
+
+  public void setIdPro(Long idPro) {
+    this.idPro = idPro;
+  }
+
 }

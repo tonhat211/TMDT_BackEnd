@@ -2,15 +2,19 @@ package com.example.passfashion.repository;
 
 import com.example.passfashion.model.Product;
 import com.example.passfashion.model.User;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+
+import jakarta.transaction.Transactional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
@@ -72,6 +76,17 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByUserIdWithImages(@Param("id") long id);
 
     List<Product> findByUserIdAndIsDeletedFalse(Long userId);
+
+    /**
+     * change is_sold field of product
+     * 
+     * @param productId
+     * @return updated product
+     */
+    @Modifying
+    @Transactional
+    @Query("UPDATE Product p SET p.isSold = true WHERE p.id = :productId")
+    int updateIsSold(@Param("productId") long productId);
 }
 
 //

@@ -34,7 +34,6 @@ public class WishlistService {
    * @return an optional product if added successfully, otherwise empty
    */
   public Optional<String> addProductToWishlist(Long userId, Long productId) throws Exception {
-    // Call the repository method to add a product to the wishlist
     return wishlistRepo.addProductToWishlist(userId, productId);
 
   }
